@@ -1,5 +1,2 @@
-# Kitchen Sinks
-Anything but a kitchen sink goes here.
-
-Currently includes:
-- Gimbal/Grabber Test Code
+# CAN Servo
+Take in DroneCAN servo command and set 4 PWM servo signals
