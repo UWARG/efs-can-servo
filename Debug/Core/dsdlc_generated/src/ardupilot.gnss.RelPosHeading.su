@@ -1,0 +1,6 @@
+E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.Timestamp.h:49:6:_uavcan_Timestamp_encode	24	static
+E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.Timestamp.h:74:6:_uavcan_Timestamp_decode	32	static
+E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/ardupilot.gnss.RelPosHeading.h:77:6:_ardupilot_gnss_RelPosHeading_encode	32	static
+E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/ardupilot.gnss.RelPosHeading.h:150:6:_ardupilot_gnss_RelPosHeading_decode	40	static
+../Core/dsdlc_generated/src/ardupilot.gnss.RelPosHeading.c:12:10:ardupilot_gnss_RelPosHeading_encode	24	static
+../Core/dsdlc_generated/src/ardupilot.gnss.RelPosHeading.c:32:6:ardupilot_gnss_RelPosHeading_decode	24	static

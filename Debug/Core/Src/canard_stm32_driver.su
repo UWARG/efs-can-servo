@@ -1,0 +1,2 @@
+../Core/Src/canard_stm32_driver.c:22:9:canardSTM32Recieve	72	static
+../Core/Src/canard_stm32_driver.c:72:9:canardSTM32Transmit	64	static

@@ -1,0 +1,6 @@
+E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.Timestamp.h:49:6:_uavcan_Timestamp_encode	24	static
+E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.Timestamp.h:74:6:_uavcan_Timestamp_decode	32	static
+E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/ardupilot.equipment.trafficmonitor.TrafficReport.h:185:6:_ardupilot_equipment_trafficmonitor_TrafficReport_encode	40	static
+E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/ardupilot.equipment.trafficmonitor.TrafficReport.h:409:6:_ardupilot_equipment_trafficmonitor_TrafficReport_decode	48	static
+../Core/dsdlc_generated/src/ardupilot.equipment.trafficmonitor.TrafficReport.c:12:10:ardupilot_equipment_trafficmonitor_TrafficReport_encode	24	static
+../Core/dsdlc_generated/src/ardupilot.equipment.trafficmonitor.TrafficReport.c:32:6:ardupilot_equipment_trafficmonitor_TrafficReport_decode	24	static
