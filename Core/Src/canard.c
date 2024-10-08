@@ -426,6 +426,7 @@ int16_t canardHandleRxFrame(CanardInstance* ins, const CanardCANFrame* frame, ui
     const uint8_t priority = PRIORITY_FROM_ID(frame->id);
     const uint8_t source_node_id = SOURCE_ID_FROM_ID(frame->id);
     const uint16_t data_type_id = extractDataType(frame->id);
+    printf("Received Data ID: %u\r\n", (uint32_t)data_type_id);
     const uint32_t transfer_descriptor =
             MAKE_TRANSFER_DESCRIPTOR(data_type_id, transfer_type, source_node_id, destination_node_id);
 
