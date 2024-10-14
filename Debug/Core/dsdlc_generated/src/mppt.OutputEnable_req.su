@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/mppt.OutputEnable_req.h:61:6:_mppt_OutputEnableRequest_encode	24	static
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/mppt.OutputEnable_req.h:101:6:_mppt_OutputEnableRequest_decode	32	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/mppt.OutputEnable_req.h:61:6:_mppt_OutputEnableRequest_encode	24	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/mppt.OutputEnable_req.h:101:6:_mppt_OutputEnableRequest_decode	32	static
 ../Core/dsdlc_generated/src/mppt.OutputEnable_req.c:14:10:mppt_OutputEnableRequest_encode	24	static
 ../Core/dsdlc_generated/src/mppt.OutputEnable_req.c:34:6:mppt_OutputEnableRequest_decode	24	static

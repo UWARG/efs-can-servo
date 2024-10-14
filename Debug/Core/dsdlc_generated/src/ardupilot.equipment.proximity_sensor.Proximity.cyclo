@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/ardupilot.equipment.proximity_sensor.Proximity.h:85:6:_ardupilot_equipment_proximity_sensor_Proximity_encode	1
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/ardupilot.equipment.proximity_sensor.Proximity.h:164:6:_ardupilot_equipment_proximity_sensor_Proximity_decode	1
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/ardupilot.equipment.proximity_sensor.Proximity.h:85:6:_ardupilot_equipment_proximity_sensor_Proximity_encode	1
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/ardupilot.equipment.proximity_sensor.Proximity.h:164:6:_ardupilot_equipment_proximity_sensor_Proximity_decode	1
 ../Core/dsdlc_generated/src/ardupilot.equipment.proximity_sensor.Proximity.c:12:10:ardupilot_equipment_proximity_sensor_Proximity_encode	1
 ../Core/dsdlc_generated/src/ardupilot.equipment.proximity_sensor.Proximity.c:32:6:ardupilot_equipment_proximity_sensor_Proximity_decode	2

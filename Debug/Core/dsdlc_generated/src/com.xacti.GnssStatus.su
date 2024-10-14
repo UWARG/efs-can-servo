@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/com.xacti.GnssStatus.h:99:6:_com_xacti_GnssStatus_encode	24	static
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/com.xacti.GnssStatus.h:223:6:_com_xacti_GnssStatus_decode	32	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/com.xacti.GnssStatus.h:99:6:_com_xacti_GnssStatus_encode	24	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/com.xacti.GnssStatus.h:223:6:_com_xacti_GnssStatus_decode	32	static
 ../Core/dsdlc_generated/src/com.xacti.GnssStatus.c:12:10:com_xacti_GnssStatus_encode	24	static
 ../Core/dsdlc_generated/src/com.xacti.GnssStatus.c:32:6:com_xacti_GnssStatus_decode	24	static

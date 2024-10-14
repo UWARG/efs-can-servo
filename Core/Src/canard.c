@@ -426,11 +426,23 @@ int16_t canardHandleRxFrame(CanardInstance* ins, const CanardCANFrame* frame, ui
     const uint8_t priority = PRIORITY_FROM_ID(frame->id);
     const uint8_t source_node_id = SOURCE_ID_FROM_ID(frame->id);
     const uint16_t data_type_id = extractDataType(frame->id);
-    printf("Received Data ID: %u\r\n", (uint32_t)data_type_id);
+    printf("Transfer Type: %u, Received Data ID: %u\r\n", (uint32_t)transfer_type, (uint32_t)data_type_id);
     const uint32_t transfer_descriptor =
             MAKE_TRANSFER_DESCRIPTOR(data_type_id, transfer_type, source_node_id, destination_node_id);
 
     const uint8_t tail_byte = frame->data[frame->data_len - 1];
+
+    if (IS_START_OF_TRANSFER(tail_byte)){
+        printf("IS START  ");
+    } else {
+        printf("NOT START    ");
+    }
+
+    if (IS_END_OF_TRANSFER(tail_byte)){
+        printf("IS END\r\n");
+    } else {
+        printf("NOT END\r\n");
+    }
 
     uint64_t data_type_signature = 0;
     CanardRxState* rx_state = NULL;

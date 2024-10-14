@@ -1,6 +1,6 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.equipment.indication.RGB565.h:53:6:_uavcan_equipment_indication_RGB565_encode	1
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.equipment.indication.RGB565.h:96:6:_uavcan_equipment_indication_RGB565_decode	1
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.equipment.indication.SingleLightCommand.h:73:6:_uavcan_equipment_indication_SingleLightCommand_encode	1
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.equipment.indication.SingleLightCommand.h:104:6:_uavcan_equipment_indication_SingleLightCommand_decode	2
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.equipment.indication.RGB565.h:53:6:_uavcan_equipment_indication_RGB565_encode	1
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.equipment.indication.RGB565.h:96:6:_uavcan_equipment_indication_RGB565_decode	1
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.equipment.indication.SingleLightCommand.h:73:6:_uavcan_equipment_indication_SingleLightCommand_encode	1
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.equipment.indication.SingleLightCommand.h:104:6:_uavcan_equipment_indication_SingleLightCommand_decode	2
 ../Core/dsdlc_generated/src/uavcan.equipment.indication.SingleLightCommand.c:12:10:uavcan_equipment_indication_SingleLightCommand_encode	1
 ../Core/dsdlc_generated/src/uavcan.equipment.indication.SingleLightCommand.c:32:6:uavcan_equipment_indication_SingleLightCommand_decode	2

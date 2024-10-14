@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.tunnel.Call_res.h:55:6:_uavcan_tunnel_CallResponse_encode	3
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.tunnel.Call_res.h:102:6:_uavcan_tunnel_CallResponse_decode	4
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.tunnel.Call_res.h:55:6:_uavcan_tunnel_CallResponse_encode	3
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.tunnel.Call_res.h:102:6:_uavcan_tunnel_CallResponse_decode	4
 ../Core/dsdlc_generated/src/uavcan.tunnel.Call_res.c:12:10:uavcan_tunnel_CallResponse_encode	1
 ../Core/dsdlc_generated/src/uavcan.tunnel.Call_res.c:32:6:uavcan_tunnel_CallResponse_decode	2

@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.protocol.dynamic_node_id.server.Entry.h:55:6:_uavcan_protocol_dynamic_node_id_server_Entry_encode	32	static
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.protocol.dynamic_node_id.server.Entry.h:112:6:_uavcan_protocol_dynamic_node_id_server_Entry_decode	40	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.protocol.dynamic_node_id.server.Entry.h:55:6:_uavcan_protocol_dynamic_node_id_server_Entry_encode	32	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.protocol.dynamic_node_id.server.Entry.h:112:6:_uavcan_protocol_dynamic_node_id_server_Entry_decode	40	static
 ../Core/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.server.Entry.c:12:10:uavcan_protocol_dynamic_node_id_server_Entry_encode	24	static
 ../Core/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.server.Entry.c:32:6:uavcan_protocol_dynamic_node_id_server_Entry_decode	24	static

@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/ardupilot.gnss.Status.h:69:6:_ardupilot_gnss_Status_encode	1
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/ardupilot.gnss.Status.h:112:6:_ardupilot_gnss_Status_decode	1
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/ardupilot.gnss.Status.h:69:6:_ardupilot_gnss_Status_encode	1
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/ardupilot.gnss.Status.h:112:6:_ardupilot_gnss_Status_decode	1
 ../Core/dsdlc_generated/src/ardupilot.gnss.Status.c:12:10:ardupilot_gnss_Status_encode	1
 ../Core/dsdlc_generated/src/ardupilot.gnss.Status.c:32:6:ardupilot_gnss_Status_decode	2

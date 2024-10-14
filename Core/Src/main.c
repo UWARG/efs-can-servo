@@ -247,12 +247,14 @@ void handle_NotifyState(CanardInstance *ins, CanardRxTransfer *transfer) {
  */
 static void handle_ArrayCommand(CanardInstance *ins, CanardRxTransfer *transfer)
 {
+	printf("entered array command\n");
     struct uavcan_equipment_actuator_ArrayCommand cmd;
     if (uavcan_equipment_actuator_ArrayCommand_decode(transfer, &cmd)) { //return true if decode is invalid
         return;
     }
     uint64_t tnow = HAL_GetTick() * 1000ULL;
     for (uint8_t i=0; i < cmd.commands.len; i++) {
+      printf("Servo Command for: %u with value: %u\r\n", cmd.commands.data[i].actuator_id, cmd.commands.data[i].command_value);
         if (cmd.commands.data[i].actuator_id >= NUM_SERVOS) {
             // not for us
             continue;
@@ -303,7 +305,7 @@ void handle_GetNodeInfo(CanardInstance *ins, CanardRxTransfer *transfer) {
 	// just setting all 16 bytes to 1 for testing
 	getUniqueID(pkt.hardware_version.unique_id);
 
-	strncpy((char*)pkt.name.data, "ESCNode", sizeof(pkt.name.data));
+	strncpy((char*)pkt.name.data, "SERVONode", sizeof(pkt.name.data));
 	pkt.name.len = strnlen((char*)pkt.name.data, sizeof(pkt.name.data));
 
 	uint16_t total_size = uavcan_protocol_GetNodeInfoResponse_encode(&pkt, buffer);
@@ -503,6 +505,7 @@ static void send_ServoStatus(void)
     }
 }
 
+
 /* USER CODE END 0 */
 
 /**
@@ -586,6 +589,7 @@ int main(void)
 	if (ts >= next_50hz_service_at) {
 		next_50hz_service_at += 1000000ULL/50U;
 		send_ServoStatus();
+    // send_ServoStatusV2();
 	}
 
   }

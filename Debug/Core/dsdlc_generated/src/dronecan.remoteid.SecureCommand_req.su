@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/dronecan.remoteid.SecureCommand_req.h:83:6:_dronecan_remoteid_SecureCommandRequest_encode	32	static
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/dronecan.remoteid.SecureCommand_req.h:157:6:_dronecan_remoteid_SecureCommandRequest_decode	40	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/dronecan.remoteid.SecureCommand_req.h:83:6:_dronecan_remoteid_SecureCommandRequest_encode	32	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/dronecan.remoteid.SecureCommand_req.h:157:6:_dronecan_remoteid_SecureCommandRequest_decode	40	static
 ../Core/dsdlc_generated/src/dronecan.remoteid.SecureCommand_req.c:14:10:dronecan_remoteid_SecureCommandRequest_encode	24	static
 ../Core/dsdlc_generated/src/dronecan.remoteid.SecureCommand_req.c:34:6:dronecan_remoteid_SecureCommandRequest_decode	24	static

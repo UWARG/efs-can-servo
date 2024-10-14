@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.equipment.ahrs.MagneticFieldStrength2.h:63:6:_uavcan_equipment_ahrs_MagneticFieldStrength2_encode	40	static
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.equipment.ahrs.MagneticFieldStrength2.h:142:6:_uavcan_equipment_ahrs_MagneticFieldStrength2_decode	48	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.equipment.ahrs.MagneticFieldStrength2.h:63:6:_uavcan_equipment_ahrs_MagneticFieldStrength2_encode	40	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.equipment.ahrs.MagneticFieldStrength2.h:142:6:_uavcan_equipment_ahrs_MagneticFieldStrength2_decode	48	static
 ../Core/dsdlc_generated/src/uavcan.equipment.ahrs.MagneticFieldStrength2.c:12:10:uavcan_equipment_ahrs_MagneticFieldStrength2_encode	24	static
 ../Core/dsdlc_generated/src/uavcan.equipment.ahrs.MagneticFieldStrength2.c:32:6:uavcan_equipment_ahrs_MagneticFieldStrength2_decode	24	static

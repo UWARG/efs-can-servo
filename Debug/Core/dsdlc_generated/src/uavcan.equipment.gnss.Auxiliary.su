@@ -1,4 +1,4 @@
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.equipment.gnss.Auxiliary.h:87:6:_uavcan_equipment_gnss_Auxiliary_encode	40	static
-E:/Temp/hey_can_esc/CAN_SERVO/Core/dsdlc_generated/include/uavcan.equipment.gnss.Auxiliary.h:205:6:_uavcan_equipment_gnss_Auxiliary_decode	48	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.equipment.gnss.Auxiliary.h:87:6:_uavcan_equipment_gnss_Auxiliary_encode	40	static
+E:/Temp/hey_can_esc/efs-can-servo/Core/dsdlc_generated/include/uavcan.equipment.gnss.Auxiliary.h:205:6:_uavcan_equipment_gnss_Auxiliary_decode	48	static
 ../Core/dsdlc_generated/src/uavcan.equipment.gnss.Auxiliary.c:12:10:uavcan_equipment_gnss_Auxiliary_encode	24	static
 ../Core/dsdlc_generated/src/uavcan.equipment.gnss.Auxiliary.c:32:6:uavcan_equipment_gnss_Auxiliary_decode	24	static

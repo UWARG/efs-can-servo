@@ -35,34 +35,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := CAN_SERVO
+BUILD_ARTIFACT_NAME := efs-can-servo
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-CAN_SERVO.elf \
+efs-can-servo.elf \
 
 MAP_FILES += \
-CAN_SERVO.map \
+efs-can-servo.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-CAN_SERVO.list \
+efs-can-servo.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: CAN_SERVO.elf secondary-outputs
+main-build: efs-can-servo.elf secondary-outputs
 
 # Tool invocations
-CAN_SERVO.elf CAN_SERVO.map: $(OBJS) $(USER_OBJS) E:\Temp\hey_can_esc\CAN_SERVO\STM32L552ZETXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "CAN_SERVO.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"E:\Temp\hey_can_esc\CAN_SERVO\STM32L552ZETXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="CAN_SERVO.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+efs-can-servo.elf efs-can-servo.map: $(OBJS) $(USER_OBJS) E:\Temp\hey_can_esc\efs-can-servo\STM32L552ZETXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "efs-can-servo.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"E:\Temp\hey_can_esc\efs-can-servo\STM32L552ZETXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="efs-can-servo.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -71,14 +71,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-CAN_SERVO.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "CAN_SERVO.list"
+efs-can-servo.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "efs-can-servo.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) CAN_SERVO.elf CAN_SERVO.list CAN_SERVO.map default.size.stdout
+	-$(RM) default.size.stdout efs-can-servo.elf efs-can-servo.list efs-can-servo.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
