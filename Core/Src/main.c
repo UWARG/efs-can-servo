@@ -86,7 +86,7 @@ static void MX_TIM2_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-#define NUM_SERVOS 4
+static const uint8_t SERVO_IDS[NUM_SERVOS] = {5, 6, 7, 8};
 
 static struct servo_state {
     float position; // -1 to 1
@@ -143,6 +143,13 @@ void setServoPWM(uint8_t ServoNum){
 		printf("INVALID SERVO ID, NOTHING SET");
 		break;
 	}
+}
+
+void startAllPWM(){
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
 }
 
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs) {
@@ -241,6 +248,18 @@ void handle_NotifyState(CanardInstance *ins, CanardRxTransfer *transfer) {
 	printf("\n");
 
 }
+/**
+ * take actuator id from command, return the servo's index in the array
+ */
+static inline int check_actuator_id(uint8_t actuator_id){
+  for(int i = 0; i < NUM_SERVOS; i ++){
+    if (SERVO_IDS[i] == actuator_id){ // checks that the command actuator id means one of our servo
+      return i;
+    }
+  }
+
+  return -1;  // command actuator id is not in array
+}
 
 /*
  * handle a servo ArrayCommand request
@@ -254,24 +273,25 @@ static void handle_ArrayCommand(CanardInstance *ins, CanardRxTransfer *transfer)
     }
     uint64_t tnow = HAL_GetTick() * 1000ULL;
     for (uint8_t i=0; i < cmd.commands.len; i++) {
-      printf("Servo Command for: %u with value: %u\r\n", cmd.commands.data[i].actuator_id, cmd.commands.data[i].command_value);
-        if (cmd.commands.data[i].actuator_id >= NUM_SERVOS) {
+        uint8_t actuator_id = cmd.commands.data[i].actuator_id;
+        int servo_array_index = check_actuator_id(actuator_id);
+        if (servo_array_index < 0 || servo_array_index >= NUM_SERVOS) {
             // not for us
             continue;
         }
         switch (cmd.commands.data[i].command_type) {
         case UAVCAN_EQUIPMENT_ACTUATOR_COMMAND_COMMAND_TYPE_UNITLESS:
-            servos[cmd.commands.data[i].actuator_id].position = cmd.commands.data[i].command_value;
+        	// command_value the floating point percentage varies from -1 to 1
+            servos[servo_array_index].position = cmd.commands.data[i].command_value;
+            setServoPWM(servo_array_index);
             break;
         case UAVCAN_EQUIPMENT_ACTUATOR_COMMAND_COMMAND_TYPE_PWM:
-            // map PWM to -1 to 1, assuming 1500 trim. If the servo has natural PWM
-            // support then we should use it directly instead
-            servos[cmd.commands.data[i].actuator_id].position = (cmd.commands.data[i].command_value-PWM_TRIM)/PWM_SCALE_FACTOR;
+            servos[servo_array_index].position = cmd.commands.data[i].command_value;
             //set the PWM signal duty cycle
-            setServoPWM(cmd.commands.data[i].actuator_id);
+            setServoPWM(servo_array_index);
             break;
         }
-        servos[cmd.commands.data[i].actuator_id].last_update_us = tnow;
+        servos[servo_array_index].last_update_us = tnow;
 
         //call a function to run the servos with the data set in this function
     }
@@ -484,9 +504,9 @@ static void send_ServoStatus(void)
         // make up some synthetic status data
         pkt.actuator_id = i;
         pkt.position = servos[i].position;
-        pkt.force = 3.5 * servos[i].position;
-        pkt.speed = 0.12; // m/s or rad/s
-        pkt.power_rating_pct = 17;
+        pkt.force = 0;
+        pkt.speed = 0; // m/s or rad/s
+        pkt.power_rating_pct = 0;
 
         uint32_t len = uavcan_equipment_actuator_Status_encode(&pkt, buffer);
 
@@ -557,6 +577,8 @@ int main(void)
 			 onTransferReceived,
 			 shouldAcceptTransfer,
 			 NULL);
+
+  startAllPWM();
 
   uint64_t next_1hz_service_at = HAL_GetTick();
   uint64_t next_50hz_service_at = HAL_GetTick();
@@ -751,7 +773,7 @@ static void MX_FDCAN1_Init(void)
   hfdcan1.Init.AutoRetransmission = DISABLE;
   hfdcan1.Init.TransmitPause = DISABLE;
   hfdcan1.Init.ProtocolException = DISABLE;
-  hfdcan1.Init.NominalPrescaler = 100;
+  hfdcan1.Init.NominalPrescaler = 10;
   hfdcan1.Init.NominalSyncJumpWidth = 1;
   hfdcan1.Init.NominalTimeSeg1 = 2;
   hfdcan1.Init.NominalTimeSeg2 = 2;
