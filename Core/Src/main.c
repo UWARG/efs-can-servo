@@ -46,6 +46,12 @@
 
 /* USER CODE BEGIN PV */
 
+CAN_RxHeaderTypeDef rxHeader; //CAN Bus Transmit Header
+CAN_TxHeaderTypeDef txHeader; //CAN Bus Receive Header
+uint8_t canRX[8] = {0,0,0,0,0,0,0,0};  //CAN Bus Receive Buffer
+CAN_FilterTypeDef canfil; //CAN Bus Filter
+uint32_t canMailbox; //CAN Bus Mail box variable
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,40 +98,32 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  CAN_FilterTypeDef canfilterconfig;
+  canfil.FilterBank = 0;
+  canfil.FilterMode = CAN_FILTERMODE_IDMASK;
+  canfil.FilterFIFOAssignment = CAN_RX_FIFO0;
+  canfil.FilterIdHigh = 0;
+  canfil.FilterIdLow = 0;
+  canfil.FilterMaskIdHigh = 0;
+  canfil.FilterMaskIdLow = 0;
+  canfil.FilterScale = CAN_FILTERSCALE_32BIT;
+  canfil.FilterActivation = ENABLE;
+  canfil.SlaveStartFilterBank = 14;
 
-	canfilterconfig.FilterActivation = CAN_FILTER_ENABLE;
-	canfilterconfig.FilterBank = 18;  // which filter bank to use from the assigned ones
-	canfilterconfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
-	canfilterconfig.FilterIdHigh = 0x446<<5;
-	canfilterconfig.FilterIdLow = 0;
-	canfilterconfig.FilterMaskIdHigh = 0x446<<5;
-	canfilterconfig.FilterMaskIdLow = 0x0000;
-	canfilterconfig.FilterMode = CAN_FILTERMODE_IDMASK;
-	canfilterconfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	canfilterconfig.SlaveStartFilterBank = 20;  // how many filters to assign to the CAN1 (master can)
+	txHeader.DLC = 8;
+	txHeader.IDE = CAN_ID_STD;
+	txHeader.RTR = CAN_RTR_DATA;
+	txHeader.StdId = 0x030;
+	txHeader.ExtId = 0x02;
+	txHeader.TransmitGlobalTime = DISABLE;
 
-	HAL_CAN_ConfigFilter(&hcan1, &canfilterconfig);
+	HAL_CAN_ConfigFilter(&hcan1,&canfil);
+	HAL_CAN_Start(&hcan1);
+	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 64000*0.05);
-
-  CAN_TxHeaderTypeDef   TxHeader;
-  uint8_t               TxData[8];
-  uint32_t              TxMailbox;
-  TxHeader.IDE = CAN_ID_STD;
-  TxHeader.StdId = 0x446;
-  TxHeader.RTR = CAN_RTR_DATA;
-  TxHeader.DLC = 2;
-
-  TxData[0] = 50;
-  TxData[1] = 0xAA;
-
-  if (HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
-	{
-	  Error_Handler();
-	}
-  hcan1.Instance->MCR &= ~(0x01<<4);
+	// configuring the pwm wave for 6s servo module
+	// should be deleted if testing the can functionality with other board
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 64000*0.05);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -135,10 +133,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK)
-	  {
-	     Error_Handler ();
-	  }
+	  uint8_t csend[] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08};
+	  HAL_StatusTypeDef ret = HAL_CAN_AddTxMessage(&hcan1,&txHeader,csend,&canMailbox);
 
 	  HAL_Delay(100);
 
@@ -196,19 +192,12 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-CAN_RxHeaderTypeDef   RxHeader;
-uint8_t               RxData[8];
-
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan1)
 {
-  if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if ((RxHeader.StdId == 0x103))
-  {
-	  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 64000*0.2);
-  }
+	HAL_CAN_GetRxMessage(hcan1, CAN_RX_FIFO0, &rxHeader, canRX);
+
+	// do something specifically works for the board you are testing
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 64000*0.8);
 }
 
 /* USER CODE END 4 */
