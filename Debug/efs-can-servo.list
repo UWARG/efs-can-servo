@@ -440,6 +440,8 @@ int main(void)
  80003ca:	4811      	ldr	r0, [pc, #68]	@ (8000410 <main+0xd4>)
  80003cc:	f000 ff97 	bl	80012fe <HAL_CAN_ActivateNotification>
 
+	// configuring the pwm wave for 6s servo module
+	// should be deleted if testing the can functionality with other board
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
  80003d0:	2100      	movs	r1, #0
  80003d2:	4810      	ldr	r0, [pc, #64]	@ (8000414 <main+0xd8>)
@@ -615,6 +617,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan1)
  80004cc:	2100      	movs	r1, #0
  80004ce:	6878      	ldr	r0, [r7, #4]
  80004d0:	f000 fdf3 	bl	80010ba <HAL_CAN_GetRxMessage>
+
+	// do something specifically works for the board you are testing
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 64000*0.8);
  80004d4:	4b06      	ldr	r3, [pc, #24]	@ (80004f0 <HAL_CAN_RxFifo0MsgPendingCallback+0x30>)
  80004d6:	681b      	ldr	r3, [r3, #0]
