@@ -54,7 +54,7 @@
 
 /* USER CODE BEGIN PV */
 
-//CAN_FilterTypeDef canfil; //CAN Bus Filter, CHECK: Can maybe remove (from Hardy previous testing)
+CAN_FilterTypeDef canfil; //CAN Bus Filter, CHECK: Can maybe remove (from Hardy previous testing)
 
 const int PWM_TRIM = 1500; // The trim value for the PWM signal
 const float PWM_SCALE_FACTOR = 500.0; // Scale factor to map PWM to range -1 to 1
@@ -197,8 +197,7 @@ static void handle_GetNodeInfo(CanardInstance *ins, CanardRxTransfer *transfer)
 }
 
 
-
-void HAL_CAN_RxFifo0Callback(CAN_HandleTypeDef *hcan, uint32_t RxFifo0ITs) {
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 	CAN_RxHeaderTypeDef RxHeader;
 	uint8_t RxData[8];
 
@@ -565,7 +564,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  /*
+
 	//CHECK: can maybe remove (prev code from Hardy Testing)
 	canfil.FilterBank = 0;
 	canfil.FilterMode = CAN_FILTERMODE_IDMASK;
@@ -579,9 +578,8 @@ int main(void)
 	canfil.SlaveStartFilterBank = 14;
 
 	HAL_CAN_ConfigFilter(&hcan1,&canfil);
-	HAL_CAN_Start(&hcan1);
-	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
-   */
+  	HAL_CAN_Start(&hcan1);
+  	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 
 	// configuring the pwm wave for servo module
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PULSE_RANGE*1.5);
@@ -621,6 +619,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  printf("HELPPP");
+
 	  processCanardTxQueue(&hcan1);
 	  const uint64_t ts = HAL_GetTick();
 
@@ -685,7 +685,10 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+int __io_putchar(int ch) {
+	ITM_SendChar(ch);
+	return ch;
+}
 /* USER CODE END 4 */
 
 /**
