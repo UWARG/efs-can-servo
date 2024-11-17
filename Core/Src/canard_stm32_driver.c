@@ -40,7 +40,7 @@ int16_t canardSTM32Recieve(CAN_HandleTypeDef *hcan, uint32_t RxLocation, CanardC
 		//	printf("\n");
 
 		// Process ID to canard format
-		rx_frame->id = RxHeader.StdId;
+		rx_frame->id = RxHeader.ExtId;
 
 		if (RxHeader.IDE == CAN_ID_EXT) { // canard will only process the message if it is extended ID
 			rx_frame->id |= CANARD_CAN_FRAME_EFF;

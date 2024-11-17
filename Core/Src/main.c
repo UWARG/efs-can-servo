@@ -31,6 +31,7 @@
 #include <time.h>
 #include "../dsdlc_generated/inc/dronecan_msgs.h"
 #include <canard_stm32_driver.h>
+#include "node_settings.h"
 
 /* USER CODE END Includes */
 
@@ -72,11 +73,7 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-
-/*
-  keep the state of 4 servos, simulating a 4 servo node
- */
-#define NUM_SERVOS 4 //CHANGE THIS LATER
+static const uint8_t SERVO_IDS[NUM_SERVOS] = {5, 6, 7, 8};
 
 static struct servo_state {
     float position; // -1 to 1
@@ -123,11 +120,11 @@ void setServoPWM(uint8_t ServoNum){
 		printf("SERVO 1 PWM SET");
 		break;
 	case 2:
-		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, servos[2].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, servos[2].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
 		printf("SERVO 2 PWM SET");
 		break;
 	case 3:
-		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, servos[3].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
+		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, servos[3].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
 		printf("SERVO 3 PWM SET");
 		break;
 	default:
@@ -136,93 +133,32 @@ void setServoPWM(uint8_t ServoNum){
 	}
 }
 
-
-/*
-  get a 64 bit monotonic timestamp in microseconds since start. This
-  is platform specific
- */
-//static uint64_t micros64(void)
-//{
-//    static uint64_t first_us;
-//    struct timespec ts;
-//    clock_gettime(CLOCK_MONOTONIC, &ts);
-//    uint64_t tus = (uint64_t)(ts.tv_sec * 1000000ULL + ts.tv_nsec / 1000ULL);
-//    if (first_us == 0) {
-//        first_us = tus;
-//    }
-//    return tus - first_us;
-//}
-
-/*
-  handle a GetNodeInfo request
-*/
-static void handle_GetNodeInfo(CanardInstance *ins, CanardRxTransfer *transfer)
-{
-    printf("GetNodeInfo request from %d\n", transfer->source_node_id);
-
-    uint8_t buffer[UAVCAN_PROTOCOL_GETNODEINFO_RESPONSE_MAX_SIZE];
-    struct uavcan_protocol_GetNodeInfoResponse pkt;
-
-    memset(&pkt, 0, sizeof(pkt));
-
-    node_status.uptime_sec = HAL_GetTick() / 1000ULL;
-    pkt.status = node_status;
-
-    // fill in your major and minor firmware version
-    pkt.software_version.major = 1;
-    pkt.software_version.minor = 2;
-    pkt.software_version.optional_field_flags = 0;
-    pkt.software_version.vcs_commit = 0; // should put git hash in here
-
-    // should fill in hardware version
-    pkt.hardware_version.major = 2;
-    pkt.hardware_version.minor = 3;
-
-    getUniqueID(pkt.hardware_version.unique_id);
-
-    strncpy((char*)pkt.name.data, "ServoNode", sizeof(pkt.name.data));
-    pkt.name.len = strnlen((char*)pkt.name.data, sizeof(pkt.name.data));
-
-    uint16_t total_size = uavcan_protocol_GetNodeInfoResponse_encode(&pkt, buffer);
-
-    canardRequestOrRespond(ins,
-                           transfer->source_node_id,
-                           UAVCAN_PROTOCOL_GETNODEINFO_SIGNATURE,
-                           UAVCAN_PROTOCOL_GETNODEINFO_ID,
-                           &transfer->transfer_id,
-                           transfer->priority,
-                           CanardResponse,
-                           &buffer[0],
-                           total_size);
+void startAllPWM(){
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 }
 
-
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
-	CAN_RxHeaderTypeDef RxHeader;
-	uint8_t RxData[8];
-
-	HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData);
-
-	printf("Received message: ID=%lu, DLC=%lu\n", RxHeader.IDE, RxHeader.DLC);
-
-	printf("0x");
-	for (int i = 0; i < RxHeader.DLC; i++) {
-		printf("%02x", RxData[i]);
-	}
-	printf("\n");
-
 	// Receiving
 	CanardCANFrame rx_frame;
 
-	const uint64_t timestamp = HAL_GetTick() * 1000;
-	rx_frame.id = RxHeader.IDE | CANARD_CAN_FRAME_EFF;
-	rx_frame.data_len = RxHeader.DLC;
-	memcpy(rx_frame.data, RxData, RxHeader.DLC);
-	// assume a single interface
-	rx_frame.iface_id = 0;
+	const uint64_t timestamp = HAL_GetTick() * 1000ULL;
+	const int16_t rx_res = canardSTM32Recieve(hcan, CAN_RX_FIFO0, &rx_frame);
 
-	canardHandleRxFrame(&canard, &rx_frame, timestamp);
+	if (rx_res < 0) {
+		printf("Receive error %d\n", rx_res);
+	}
+	else if (rx_res > 0)        // Success - process the frame
+	{
+		canardHandleRxFrame(&canard, &rx_frame, timestamp);
+	}
 }
+// NOTE: All canard handlers and senders are based on this reference: https://dronecan.github.io/Specification/7._List_of_standard_data_types/
+// Alternatively, you can look at the corresponding generated header file in the dsdlc_generated folder
+
+// Canard Handlers ( Many have code copied from libcanard esc_node example: https://github.com/dronecan/libcanard/blob/master/examples/ESCNode/esc_node.c )
 
 void handle_NodeStatus(CanardInstance *ins, CanardRxTransfer *transfer) {
 	struct uavcan_protocol_NodeStatus nodeStatus;
@@ -284,7 +220,9 @@ void handle_NotifyState(CanardInstance *ins, CanardRxTransfer *transfer) {
 		return;
 	}
 
-	printf("Vehicle State: %llu ", notifyState.vehicle_state);
+	uint32_t nl = notifyState.vehicle_state & 0xFFFFFFFF;  // ignoring the last 32 bits for printing since the highest vehicle_state value right now is 23 even though they're allowed to be up to 64bit unsigned integer
+
+	printf("Vehicle State: %lu ", nl);
 
 	if (notifyState.aux_data.len > 0) {
 		printf("Aux Data: 0x");
@@ -297,75 +235,133 @@ void handle_NotifyState(CanardInstance *ins, CanardRxTransfer *transfer) {
 	printf("\n");
 
 }
+/**
+ * take actuator id from command, return the servo's index in the array
+ */
+static inline int check_actuator_id(uint8_t actuator_id){
+  for(int i = 0; i < NUM_SERVOS; i ++){
+    if (SERVO_IDS[i] == actuator_id){ // checks that the command actuator id means one of our servo
+      return i;
+    }
+  }
+
+  return -1;  // command actuator id is not in array
+}
+
 /*
  * handle a servo ArrayCommand request
  */
 static void handle_ArrayCommand(CanardInstance *ins, CanardRxTransfer *transfer)
 {
+	printf("entered array command\n");
     struct uavcan_equipment_actuator_ArrayCommand cmd;
     if (uavcan_equipment_actuator_ArrayCommand_decode(transfer, &cmd)) { //return true if decode is invalid
         return;
     }
     uint64_t tnow = HAL_GetTick() * 1000ULL;
     for (uint8_t i=0; i < cmd.commands.len; i++) {
-        if (cmd.commands.data[i].actuator_id >= NUM_SERVOS) {
+        uint8_t actuator_id = cmd.commands.data[i].actuator_id;
+        int servo_array_index = check_actuator_id(actuator_id);
+        if (servo_array_index < 0 || servo_array_index >= NUM_SERVOS) {
             // not for us
             continue;
         }
         switch (cmd.commands.data[i].command_type) {
         case UAVCAN_EQUIPMENT_ACTUATOR_COMMAND_COMMAND_TYPE_UNITLESS:
-            servos[cmd.commands.data[i].actuator_id].position = cmd.commands.data[i].command_value;
+        	// command_value the floating point percentage varies from -1 to 1
+            servos[servo_array_index].position = cmd.commands.data[i].command_value;
+            setServoPWM(servo_array_index);
             break;
         case UAVCAN_EQUIPMENT_ACTUATOR_COMMAND_COMMAND_TYPE_PWM:
-            // map PWM to -1 to 1, assuming 1500 trim. If the servo has natural PWM
-            // support then we should use it directly instead
-            servos[cmd.commands.data[i].actuator_id].position = (cmd.commands.data[i].command_value-PWM_TRIM)/PWM_SCALE_FACTOR;
+            servos[servo_array_index].position = cmd.commands.data[i].command_value;
             //set the PWM signal duty cycle
-            setServoPWM(cmd.commands.data[i].actuator_id);
+            setServoPWM(servo_array_index);
             break;
         }
-        servos[cmd.commands.data[i].actuator_id].last_update_us = tnow;
+        servos[servo_array_index].last_update_us = tnow;
 
         //call a function to run the servos with the data set in this function
     }
 }
 
+/*
+  handle a GetNodeInfo request
+*/
+// TODO: All the data in here is temporary for testing. If actually need to send valid data, edit accordingly.
+void handle_GetNodeInfo(CanardInstance *ins, CanardRxTransfer *transfer) {
+	printf("GetNodeInfo request from %d\n", transfer->source_node_id);
 
-void onTransferReceived(CanardInstance *ins, CanardRxTransfer *transfer) {
-	// switch on data type ID to pass to the right handler function
-	printf("Transfer type: %du, Transfer ID: %du \n", transfer->transfer_type, transfer->data_type_id);
-	printf("0x");
-		for (int i = 0; i < transfer->payload_len; i++) {
-			printf("%02x", transfer->payload_head[i]);
-		}
+	uint8_t buffer[UAVCAN_PROTOCOL_GETNODEINFO_RESPONSE_MAX_SIZE];
+	struct uavcan_protocol_GetNodeInfoResponse pkt;
 
-		printf("\n");
-		if (transfer->transfer_type == CanardTransferTypeBroadcast) {
-			// check if we want to handle a specific broadcast message
-			switch (transfer->data_type_id) {
-			case UAVCAN_PROTOCOL_NODESTATUS_ID: {
-				handle_NodeStatus(ins, transfer);
-				break;
-			}
-			case ARDUPILOT_INDICATION_NOTIFYSTATE_ID: {
-				handle_NotifyState(ins, transfer);
-				break;
-			}
-			case UAVCAN_EQUIPMENT_ACTUATOR_ARRAYCOMMAND_ID:{
-				handle_ArrayCommand(ins, transfer);
-				break;
-			}
-			}
-		}
-		if (transfer->transfer_type == CanardTransferTypeRequest){
-			switch (transfer->data_type_id){
-			case UAVCAN_PROTOCOL_GETNODEINFO_ID:{
-				handle_GetNodeInfo(ins, transfer);
-				break;
-			}
-			}
-		}
+	memset(&pkt, 0, sizeof(pkt));
+
+	node_status.uptime_sec = HAL_GetTick() / 1000ULL;
+	pkt.status = node_status;
+
+	// fill in your major and minor firmware version
+	pkt.software_version.major = 1;
+	pkt.software_version.minor = 0;
+	pkt.software_version.optional_field_flags = 0;
+	pkt.software_version.vcs_commit = 0; // should put git hash in here
+
+	// should fill in hardware version
+	pkt.hardware_version.major = 1;
+	pkt.hardware_version.minor = 0;
+
+	// just setting all 16 bytes to 1 for testing
+	getUniqueID(pkt.hardware_version.unique_id);
+
+	strncpy((char*)pkt.name.data, "SERVONode", sizeof(pkt.name.data));
+	pkt.name.len = strnlen((char*)pkt.name.data, sizeof(pkt.name.data));
+
+	uint16_t total_size = uavcan_protocol_GetNodeInfoResponse_encode(&pkt, buffer);
+
+	canardRequestOrRespond(ins,
+						   transfer->source_node_id,
+						   UAVCAN_PROTOCOL_GETNODEINFO_SIGNATURE,
+						   UAVCAN_PROTOCOL_GETNODEINFO_ID,
+						   &transfer->transfer_id,
+						   transfer->priority,
+						   CanardResponse,
+						   &buffer[0],
+						   total_size);
 }
+
+// Canard Senders
+
+/*
+  send the 1Hz NodeStatus message. This is what allows a node to show
+  up in the DroneCAN GUI tool and in the flight controller logs
+ */
+void send_NodeStatus(void) {
+    uint8_t buffer[UAVCAN_PROTOCOL_GETNODEINFO_RESPONSE_MAX_SIZE];
+
+    node_status.uptime_sec = HAL_GetTick() / 1000UL;
+    node_status.health = UAVCAN_PROTOCOL_NODESTATUS_HEALTH_OK;
+    node_status.mode = UAVCAN_PROTOCOL_NODESTATUS_MODE_OPERATIONAL;
+    node_status.sub_mode = 0;
+
+    // put whatever you like in here for display in GUI
+    node_status.vendor_specific_status_code = 1234;
+
+    uint32_t len = uavcan_protocol_NodeStatus_encode(&node_status, buffer);
+
+    // we need a static variable for the transfer ID. This is
+    // incremeneted on each transfer, allowing for detection of packet
+    // loss
+    static uint8_t transfer_id;
+
+    canardBroadcast(&canard,
+                    UAVCAN_PROTOCOL_NODESTATUS_SIGNATURE,
+                    UAVCAN_PROTOCOL_NODESTATUS_ID,
+                    &transfer_id,
+                    CANARD_TRANSFER_PRIORITY_LOW,
+                    buffer,
+                    len);
+}
+
+// Canard Util
 
 bool shouldAcceptTransfer(const CanardInstance *ins,
                                  uint64_t *out_data_type_signature,
@@ -375,34 +371,16 @@ bool shouldAcceptTransfer(const CanardInstance *ins,
 {
 	if (transfer_type == CanardTransferTypeRequest) {
 	// check if we want to handle a specific service request
-	switch (data_type_id) {
-	case UAVCAN_PROTOCOL_GETNODEINFO_ID: {
-		*out_data_type_signature = UAVCAN_PROTOCOL_GETNODEINFO_REQUEST_SIGNATURE;
-		return true;
-	}
-	case UAVCAN_PROTOCOL_PARAM_GETSET_ID: {
-		*out_data_type_signature = UAVCAN_PROTOCOL_PARAM_GETSET_SIGNATURE;
-		return true;
-	}
-	case UAVCAN_PROTOCOL_PARAM_EXECUTEOPCODE_ID: {
-		*out_data_type_signature = UAVCAN_PROTOCOL_PARAM_EXECUTEOPCODE_SIGNATURE;
-		return true;
-	}
-	case UAVCAN_PROTOCOL_RESTARTNODE_ID: {
-		*out_data_type_signature = UAVCAN_PROTOCOL_RESTARTNODE_SIGNATURE;
-		return true;
-	}
-	case UAVCAN_PROTOCOL_FILE_BEGINFIRMWAREUPDATE_ID:
-		*out_data_type_signature = UAVCAN_PROTOCOL_FILE_BEGINFIRMWAREUPDATE_SIGNATURE;
-		return true;
-	}
+		switch (data_type_id) {
+		case UAVCAN_PROTOCOL_GETNODEINFO_ID: {
+			*out_data_type_signature = UAVCAN_PROTOCOL_GETNODEINFO_REQUEST_SIGNATURE;
+			return true;
+		}
+		}
 	}
 	if (transfer_type == CanardTransferTypeResponse) {
 		// check if we want to handle a specific service request
 		switch (data_type_id) {
-		case UAVCAN_PROTOCOL_FILE_READ_ID:
-			*out_data_type_signature = UAVCAN_PROTOCOL_FILE_READ_SIGNATURE;
-			return true;
 		}
 	}
 	if (transfer_type == CanardTransferTypeBroadcast) {
@@ -426,38 +404,46 @@ bool shouldAcceptTransfer(const CanardInstance *ins,
 	return false;
 }
 
-/*
-  send the 1Hz NodeStatus message. This is what allows a node to show
-  up in the DroneCAN GUI tool and in the flight controller logs
- */
-static void send_NodeStatus(void)
-{
-    uint8_t buffer[UAVCAN_PROTOCOL_GETNODEINFO_RESPONSE_MAX_SIZE];
-
-    node_status.uptime_sec = HAL_GetTick() / 1000ULL;
-    node_status.health = UAVCAN_PROTOCOL_NODESTATUS_HEALTH_OK;
-    node_status.mode = UAVCAN_PROTOCOL_NODESTATUS_MODE_OPERATIONAL;
-    node_status.sub_mode = 0;
-    // put whatever you like in here for display in GUI
-    node_status.vendor_specific_status_code = 1234;
-
-
-    uint32_t len = uavcan_protocol_NodeStatus_encode(&node_status, buffer);
-
-    // we need a static variable for the transfer ID. This is
-    // incremeneted on each transfer, allowing for detection of packet
-    // loss
-    static uint8_t transfer_id;
-
-    canardBroadcast(&canard,
-                    UAVCAN_PROTOCOL_NODESTATUS_SIGNATURE,
-                    UAVCAN_PROTOCOL_NODESTATUS_ID,
-                    &transfer_id,
-                    CANARD_TRANSFER_PRIORITY_LOW,
-                    buffer,
-                    len);
+void onTransferReceived(CanardInstance *ins, CanardRxTransfer *transfer) {
+	// switch on data type ID to pass to the right handler function
+//	printf("Transfer type: %du, Transfer ID: %du \n", transfer->transfer_type, transfer->data_type_id);
+//	printf("0x");
+//		for (int i = 0; i < transfer->payload_len; i++) {
+//			printf("%02x", transfer->payload_head[i]);
+//		}
+//
+//		printf("\n");
+	if (transfer->transfer_type == CanardTransferTypeRequest) {
+		// check if we want to handle a specific service request
+		switch (transfer->data_type_id) {
+		case UAVCAN_PROTOCOL_GETNODEINFO_ID: {
+			handle_GetNodeInfo(ins, transfer);
+			break;
+		}
+		}
+	}
+	if (transfer->transfer_type == CanardTransferTypeResponse) {
+		switch (transfer->data_type_id) {
+		}
+	}
+	if (transfer->transfer_type == CanardTransferTypeBroadcast) {
+		// check if we want to handle a specific broadcast message
+		switch (transfer->data_type_id) {
+		case UAVCAN_EQUIPMENT_ACTUATOR_ARRAYCOMMAND_ID:{
+			handle_ArrayCommand(ins, transfer);
+			break;
+		}
+		case UAVCAN_PROTOCOL_NODESTATUS_ID: {
+			handle_NodeStatus(ins, transfer);
+			break;
+		}
+		case ARDUPILOT_INDICATION_NOTIFYSTATE_ID: {
+			handle_NotifyState(ins, transfer);
+			break;
+		}
+		}
+	}
 }
-
 
 void processCanardTxQueue(CAN_HandleTypeDef *hcan) {
 	// Transmitting
@@ -476,12 +462,10 @@ void processCanardTxQueue(CAN_HandleTypeDef *hcan) {
 	}
 }
 
-
 /*
   This function is called at 1 Hz rate from the main loop.
 */
-static void process1HzTasks(uint64_t timestamp_usec)
-{
+void process1HzTasks(uint64_t timestamp_usec) {
     /*
       Purge transfers that are no longer transmitted. This can free up some memory
     */
@@ -507,9 +491,9 @@ static void send_ServoStatus(void)
         // make up some synthetic status data
         pkt.actuator_id = i;
         pkt.position = servos[i].position;
-        pkt.force = 3.5 * servos[i].position;
-        pkt.speed = 0.12; // m/s or rad/s
-        pkt.power_rating_pct = 17;
+        pkt.force = 0;
+        pkt.speed = 0; // m/s or rad/s
+        pkt.power_rating_pct = 0;
 
         uint32_t len = uavcan_equipment_actuator_Status_encode(&pkt, buffer);
 
@@ -527,6 +511,7 @@ static void send_ServoStatus(void)
                         len);
     }
 }
+
 
 /* USER CODE END 0 */
 
@@ -582,24 +567,7 @@ int main(void)
   	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 
 	// configuring the pwm wave for servo module
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PULSE_RANGE*1.5);
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, PULSE_RANGE*1.5);
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, PULSE_RANGE*1.5);
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, PULSE_RANGE*1.5);
-
-	// should be deleted if testing the can functionality with other board
-	if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1)!= HAL_OK){
-		Error_Handler();
-	}
-	if (HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2)!= HAL_OK){
-		Error_Handler();
-	}
-	if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1)!= HAL_OK){
-		Error_Handler();
-	}
-	if (HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2)!= HAL_OK){
-		Error_Handler();
-	}
+	startAllPWM();
 
 	canardInit(&canard,
 			  	  memory_pool,
