@@ -112,9 +112,10 @@ void getUniqueID(uint8_t id[16]){
 void setServoPWM(uint8_t ServoNum){
 	switch (ServoNum) {
 	case 0:
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, servos[0].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PULSE_RANGE*20-(servos[0].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5)));
 		printf("SERVO 0 PWM SET");
 		break;
+	/*
 	case 1:
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, servos[1].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
 		printf("SERVO 1 PWM SET");
@@ -127,6 +128,7 @@ void setServoPWM(uint8_t ServoNum){
 		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, servos[3].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
 		printf("SERVO 3 PWM SET");
 		break;
+		*/
 	default:
 		printf("INVALID SERVO ID, NOTHING SET");
 		break;
@@ -135,9 +137,12 @@ void setServoPWM(uint8_t ServoNum){
 
 void startAllPWM(){
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+  /*
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  */
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
@@ -587,7 +592,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  printf("HELPPP");
 
 	  processCanardTxQueue(&hcan1);
 	  const uint64_t ts = HAL_GetTick();
