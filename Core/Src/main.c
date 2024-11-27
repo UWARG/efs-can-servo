@@ -32,6 +32,7 @@
 #include "../dsdlc_generated/inc/dronecan_msgs.h"
 #include <canard_stm32_driver.h>
 #include "node_settings.h"
+#include "canardRxQueue.h"
 
 /* USER CODE END Includes */
 
@@ -149,7 +150,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 	// Receiving
 	CanardCANFrame rx_frame;
 
-	const uint64_t timestamp = HAL_GetTick() * 1000ULL;
 	const int16_t rx_res = canardSTM32Recieve(hcan, CAN_RX_FIFO0, &rx_frame);
 
 	if (rx_res < 0) {
@@ -157,9 +157,19 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 	}
 	else if (rx_res > 0)        // Success - process the frame
 	{
-		canardHandleRxFrame(&canard, &rx_frame, timestamp);
+		enqueueRxFrame(&rx_frame);
 	}
 }
+
+void processCanardRxQueue() {
+  struct CanardRxQueueItem* currentRxFrame = dequeueRxFrame();
+  const uint64_t timestamp = HAL_GetTick() * 1000ULL;
+
+  canardHandleRxFrame(&canard, &currentRxFrame->frame, timestamp);
+
+  free(currentRxFrame);
+}
+
 // NOTE: All canard handlers and senders are based on this reference: https://dronecan.github.io/Specification/7._List_of_standard_data_types/
 // Alternatively, you can look at the corresponding generated header file in the dsdlc_generated folder
 
@@ -594,6 +604,9 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	  processCanardTxQueue(&hcan1);
+	
+ 	  processCanardRxQueue();
+
 	  const uint64_t ts = HAL_GetTick();
 
 	  if (ts >= next_1hz_service_at){
