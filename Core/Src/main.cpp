@@ -29,10 +29,12 @@
 #include <canard.h>
 #include <_timespec.h>
 #include <time.h>
-#include "../dsdlc_generated/inc/dronecan_msgs.h"
-#include <canard_stm32_driver.h>
+extern "C" {
+#include "dronecan_msgs.h"
+#include "canard_stm32_driver.h"
 #include "node_settings.h"
-
+#include "servo_control.hpp"
+}
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,10 +59,10 @@
 
 CAN_FilterTypeDef canfil; //CAN Bus Filter, CHECK: Can maybe remove (from Hardy previous testing)
 
-const int PWM_TRIM = 1500; // The trim value for the PWM signal
-const float PWM_SCALE_FACTOR = 500.0; // Scale factor to map PWM to range -1 to 1
 static CanardInstance canard;
 static uint8_t memory_pool[1024];
+
+static ServoController servo_controller;
 
 /* USER CODE END PV */
 
@@ -72,14 +74,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-static const uint8_t SERVO_IDS[NUM_SERVOS] = {5, 6, 7, 8};
-
-static struct servo_state {
-    float position; // -1 to 1
-    uint64_t last_update_us;
-} servos[NUM_SERVOS];
-
 
 static struct uavcan_protocol_NodeStatus node_status;
 
@@ -106,43 +100,6 @@ void getUniqueID(uint8_t id[16]){
 	HALUniqueIDs[1] = HAL_GetUIDw1();
 	HALUniqueIDs[2] = HAL_GetUIDw2();
 	memcpy(id, HALUniqueIDs, 12);
-}
-
-// Might have to change the code if the handler (&htim) changes based on # of servos were controlling
-void setServoPWM(uint8_t ServoNum){
-	switch (ServoNum) {
-	case 0:
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, PULSE_RANGE*20-(servos[0].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5)));
-		printf("SERVO 0 PWM SET");
-		break;
-	/*
-	case 1:
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, servos[1].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
-		printf("SERVO 1 PWM SET");
-		break;
-	case 2:
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, servos[2].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
-		printf("SERVO 2 PWM SET");
-		break;
-	case 3:
-		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, servos[3].position * (PULSE_RANGE/2) + (PULSE_RANGE*1.5));
-		printf("SERVO 3 PWM SET");
-		break;
-		*/
-	default:
-		printf("INVALID SERVO ID, NOTHING SET");
-		break;
-	}
-}
-
-void startAllPWM(){
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
-  /*
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-  */
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
@@ -240,18 +197,6 @@ void handle_NotifyState(CanardInstance *ins, CanardRxTransfer *transfer) {
 	printf("\n");
 
 }
-/**
- * take actuator id from command, return the servo's index in the array
- */
-static inline int check_actuator_id(uint8_t actuator_id){
-  for(int i = 0; i < NUM_SERVOS; i ++){
-    if (SERVO_IDS[i] == actuator_id){ // checks that the command actuator id means one of our servo
-      return i;
-    }
-  }
-
-  return -1;  // command actuator id is not in array
-}
 
 /*
  * handle a servo ArrayCommand request
@@ -266,24 +211,17 @@ static void handle_ArrayCommand(CanardInstance *ins, CanardRxTransfer *transfer)
     uint64_t tnow = HAL_GetTick() * 1000ULL;
     for (uint8_t i=0; i < cmd.commands.len; i++) {
         uint8_t actuator_id = cmd.commands.data[i].actuator_id;
-        int servo_array_index = check_actuator_id(actuator_id);
-        if (servo_array_index < 0 || servo_array_index >= NUM_SERVOS) {
-            // not for us
-            continue;
-        }
+		float actuator_pos = cmd.commands.data[i].command_value;
+
         switch (cmd.commands.data[i].command_type) {
         case UAVCAN_EQUIPMENT_ACTUATOR_COMMAND_COMMAND_TYPE_UNITLESS:
-        	// command_value the floating point percentage varies from -1 to 1
-            servos[servo_array_index].position = cmd.commands.data[i].command_value;
-            setServoPWM(servo_array_index);
+			servo_controller.update_servo_position(actuator_id, actuator_pos);
             break;
         case UAVCAN_EQUIPMENT_ACTUATOR_COMMAND_COMMAND_TYPE_PWM:
-            servos[servo_array_index].position = cmd.commands.data[i].command_value;
-            //set the PWM signal duty cycle
-            setServoPWM(servo_array_index);
+			servo_controller.update_servo_position(actuator_id, actuator_pos);
             break;
         }
-        servos[servo_array_index].last_update_us = tnow;
+        servo_controller.update_servo_last_update_us(actuator_id, tnow);
 
         //call a function to run the servos with the data set in this function
     }
@@ -487,34 +425,34 @@ void process1HzTasks(uint64_t timestamp_usec) {
 */
 static void send_ServoStatus(void)
 {
-    // send a separate status packet for each servo
-    for (uint8_t i=0; i<NUM_SERVOS; i++) {
-        struct uavcan_equipment_actuator_Status pkt;
-        memset(&pkt, 0, sizeof(pkt));
-        uint8_t buffer[UAVCAN_EQUIPMENT_ACTUATOR_STATUS_MAX_SIZE];
+    // // send a separate status packet for each servo
+    // for (uint8_t i=0; i<NUM_SERVOS; i++) {
+    //     struct uavcan_equipment_actuator_Status pkt;
+    //     memset(&pkt, 0, sizeof(pkt));
+    //     uint8_t buffer[UAVCAN_EQUIPMENT_ACTUATOR_STATUS_MAX_SIZE];
 
-        // make up some synthetic status data
-        pkt.actuator_id = i;
-        pkt.position = servos[i].position;
-        pkt.force = 0;
-        pkt.speed = 0; // m/s or rad/s
-        pkt.power_rating_pct = 0;
+    //     // make up some synthetic status data
+    //     pkt.actuator_id = i;
+    //     pkt.position = servos[i].position;
+    //     pkt.force = 0;
+    //     pkt.speed = 0; // m/s or rad/s
+    //     pkt.power_rating_pct = 0;
 
-        uint32_t len = uavcan_equipment_actuator_Status_encode(&pkt, buffer);
+    //     uint32_t len = uavcan_equipment_actuator_Status_encode(&pkt, buffer);
 
-        // we need a static variable for the transfer ID. This is
-        // incremeneted on each transfer, allowing for detection of packet
-        // loss
-        static uint8_t transfer_id;
+    //     // we need a static variable for the transfer ID. This is
+    //     // incremeneted on each transfer, allowing for detection of packet
+    //     // loss
+    //     static uint8_t transfer_id;
 
-        canardBroadcast(&canard,
-                        UAVCAN_EQUIPMENT_ACTUATOR_STATUS_SIGNATURE,
-                        UAVCAN_EQUIPMENT_ACTUATOR_STATUS_ID,
-                        &transfer_id,
-                        CANARD_TRANSFER_PRIORITY_LOW,
-                        buffer,
-                        len);
-    }
+    //     canardBroadcast(&canard,
+    //                     UAVCAN_EQUIPMENT_ACTUATOR_STATUS_SIGNATURE,
+    //                     UAVCAN_EQUIPMENT_ACTUATOR_STATUS_ID,
+    //                     &transfer_id,
+    //                     CANARD_TRANSFER_PRIORITY_LOW,
+    //                     buffer,
+    //                     len);
+    // }
 }
 
 
@@ -572,7 +510,7 @@ int main(void)
   	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 
 	// configuring the pwm wave for servo module
-	startAllPWM();
+	servo_controller.start_servos();
 
 	canardInit(&canard,
 			  	  memory_pool,

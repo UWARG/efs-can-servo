@@ -1,21 +1,20 @@
-../Drivers/CMSIS/Include/core_cm4.h:2059:26:ITM_SendChar	4
-../Core/Src/main.c:87:5:clock_gettime	2
-../Core/Src/main.c:101:6:getUniqueID	1
-../Core/Src/main.c:112:6:setServoPWM	2
-../Core/Src/main.c:138:6:startAllPWM	1
-../Core/Src/main.c:148:6:HAL_CAN_RxFifo0MsgPendingCallback	3
-../Core/Src/main.c:168:6:handle_NodeStatus	11
-../Core/Src/main.c:221:6:handle_NotifyState	4
-../Core/Src/main.c:246:19:check_actuator_id	3
-../Core/Src/main.c:259:13:handle_ArrayCommand	7
-../Core/Src/main.c:296:6:handle_GetNodeInfo	1
-../Core/Src/main.c:342:6:send_NodeStatus	1
-../Core/Src/main.c:371:6:shouldAcceptTransfer	8
-../Core/Src/main.c:412:6:onTransferReceived	8
-../Core/Src/main.c:453:6:processCanardTxQueue	4
-../Core/Src/main.c:473:6:process1HzTasks	1
-../Core/Src/main.c:488:13:send_ServoStatus	2
-../Core/Src/main.c:527:5:main	3
-../Core/Src/main.c:615:6:SystemClock_Config	4
-../Core/Src/main.c:660:5:__io_putchar	1
-../Core/Src/main.c:670:6:Error_Handler	1
+../Drivers/CMSIS/Include/core_cm4.h:2059:26:uint32_t ITM_SendChar(uint32_t)	5
+../Core/Src/main.cpp:81:5:int clock_gettime(clockid_t, timespec*)	2
+../Core/Src/main.cpp:95:6:void getUniqueID(uint8_t*)	1
+../Core/Src/main.cpp:105:6:void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef*)	3
+../Core/Src/main.cpp:125:6:void handle_NodeStatus(CanardInstance*, CanardRxTransfer*)	11
+../Core/Src/main.cpp:178:6:void handle_NotifyState(CanardInstance*, CanardRxTransfer*)	4
+../Core/Src/main.cpp:204:13:void handle_ArrayCommand(CanardInstance*, CanardRxTransfer*)	5
+../Core/Src/main.cpp:234:6:void handle_GetNodeInfo(CanardInstance*, CanardRxTransfer*)	1
+../Core/Src/main.cpp:280:6:void send_NodeStatus()	1
+../Core/Src/main.cpp:309:6:bool shouldAcceptTransfer(const CanardInstance*, uint64_t*, uint16_t, CanardTransferType, uint8_t)	8
+../Core/Src/main.cpp:350:6:void onTransferReceived(CanardInstance*, CanardRxTransfer*)	8
+../Core/Src/main.cpp:391:6:void processCanardTxQueue(CAN_HandleTypeDef*)	4
+../Core/Src/main.cpp:411:6:void process1HzTasks(uint64_t)	1
+../Core/Src/main.cpp:426:13:void send_ServoStatus()	1
+../Core/Src/main.cpp:465:5:int main()	3
+../Core/Src/main.cpp:553:6:void SystemClock_Config()	4
+../Core/Src/main.cpp:598:5:int __io_putchar(int)	1
+../Core/Src/main.cpp:608:6:void Error_Handler()	1
+../Core/Src/main.cpp:617:1:void __static_initialization_and_destruction_0(int, int)	3
+../Core/Src/main.cpp:617:1:cpp)	1

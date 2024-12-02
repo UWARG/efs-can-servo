@@ -1,4 +1,4 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
+Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -28,206 +28,207 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Core/Inc/can.h ../Core/Inc/main.h ../Core/Inc/tim.h \
  ../Core/Inc/gpio.h ../Core/Inc/canard.h ../Core/Inc/_timespec.h \
- ../Core/Src/../dsdlc_generated/inc/dronecan_msgs.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.power.BatteryCells.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.power.BatteryContinuous.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.power.BatteryInfoAux.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.Timestamp.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.power.BatteryPeriodic.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.proximity_sensor.Proximity.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.trafficmonitor.TrafficReport.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.gnss.Heading.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.gnss.MovingBaselineData.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.gnss.RelPosHeading.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.gnss.Status.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.indication.Button.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.indication.NotifyState.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.indication.SafetyState.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hex.equipment.flow.Measurement.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.himark.servo.ServoCmd.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.himark.servo.ServoInfo.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.GetEscID.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.GetMaintenanceInformation.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.GetMaintenanceInformation_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.GetMaintenanceInformation_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.GetMajorConfig.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.GetMajorConfig_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.GetMajorConfig_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.RawCommand.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SelfTest.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SelfTest_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SelfTest_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetAngle.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetAngle_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetAngle_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetBaud.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetBaud_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetBaud_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetDirection.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetDirection_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetDirection_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetID.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetID_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetID_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetLED.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetLED_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetLED_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetReportingFrequency.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetReportingFrequency_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetReportingFrequency_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetThrottleSource.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetThrottleSource_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetThrottleSource_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.StatusMsg1.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.StatusMsg2.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.StatusMsg3.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.FocCtrl.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.ParamCfg.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.ParamGet.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.PUSHCAN.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.PUSHSCI.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.volz.servo.ActuatorStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.CopterAttStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.GimbalAttitudeStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.GimbalControlData.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.GnssStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.GnssStatusReq.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/cuav.equipment.power.CBAT.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.protocol.CanStats.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.protocol.Stats.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.ArmStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.BasicID.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.Location.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.OperatorID.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.SecureCommand.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/dronecan.remoteid.SecureCommand_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/dronecan.remoteid.SecureCommand_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.SelfID.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.System.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.sensors.hygrometer.Hygrometer.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.sensors.magnetometer.MagneticFieldStrengthHiRes.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.sensors.rc.RCInput.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/dronecan.sensors.rpm.RPM.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/mppt.OutputEnable.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/mppt.OutputEnable_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/mppt.OutputEnable_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/mppt.Stream.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.CoarseOrientation.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.actuator.ArrayCommand.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.equipment.actuator.Command.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.actuator.Status.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ahrs.MagneticFieldStrength.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ahrs.MagneticFieldStrength2.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ahrs.RawIMU.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ahrs.Solution.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.AngleOfAttack.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.IndicatedAirspeed.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.RawAirData.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.Sideslip.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.StaticPressure.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.StaticTemperature.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.TrueAirspeed.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.device.Temperature.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.esc.RawCommand.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.esc.RPMCommand.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.esc.Status.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.esc.StatusExtended.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.Auxiliary.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.ECEFPositionVelocity.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.Fix.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.Fix2.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.RTCMStream.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.hardpoint.Command.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.hardpoint.Status.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ice.FuelTankStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ice.reciprocating.CylinderStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ice.reciprocating.Status.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.indication.BeepCommand.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.indication.LightsCommand.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.equipment.indication.SingleLightCommand.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.equipment.indication.RGB565.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.power.BatteryInfo.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.power.CircuitStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.power.PrimaryPowerSupplyStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.range_sensor.Measurement.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.safety.ArmingStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.navigation.GlobalNavigationSolution.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.AccessCommandShell.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.AccessCommandShell_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.AccessCommandShell_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.CANIfaceStats.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.debug.KeyValue.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.debug.LogLevel.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.debug.LogMessage.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.dynamic_node_id.Allocation.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.Entry.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.dynamic_node_id.server.Discovery.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.DataTypeKind.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.enumeration.Begin.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.enumeration.Begin_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.enumeration.Begin_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.enumeration.Indication.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.NumericValue.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.param.Empty.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.file.Path.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.Delete.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Delete_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Delete_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.file.Error.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.EntryType.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.GetInfo.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.GetInfo_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.GetInfo_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.Read.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Read_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Read_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.Write.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Write_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Write_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.GetDataTypeInfo.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetDataTypeInfo_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetDataTypeInfo_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.GetNodeInfo.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetNodeInfo_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetNodeInfo_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.HardwareVersion.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.NodeStatus.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.SoftwareVersion.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.GetTransportStats.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetTransportStats_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetTransportStats_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.GlobalTimeSync.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.param.ExecuteOpcode.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.ExecuteOpcode_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.ExecuteOpcode_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.param.GetSet.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.GetSet_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.param.Value.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.GetSet_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.Panic.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.RestartNode.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.RestartNode_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.RestartNode_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.Broadcast.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.tunnel.Protocol.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.Call.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.tunnel.Call_req.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.tunnel.Call_res.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.SerialConfig.h \
- ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.Targetted.h \
- ../Core/Inc/canard_stm32_driver.h ../Core/Inc/node_settings.h
+ ../dsdlc_generated/Inc/dronecan_msgs.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.equipment.power.BatteryCells.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.equipment.power.BatteryContinuous.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.equipment.power.BatteryInfoAux.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.Timestamp.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.equipment.power.BatteryPeriodic.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.equipment.proximity_sensor.Proximity.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.equipment.trafficmonitor.TrafficReport.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.gnss.Heading.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.gnss.MovingBaselineData.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.gnss.RelPosHeading.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.gnss.Status.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.indication.Button.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.indication.NotifyState.h \
+ ../dsdlc_generated/Inc/../inc/ardupilot.indication.SafetyState.h \
+ ../dsdlc_generated/Inc/../inc/com.hex.equipment.flow.Measurement.h \
+ ../dsdlc_generated/Inc/../inc/com.himark.servo.ServoCmd.h \
+ ../dsdlc_generated/Inc/../inc/com.himark.servo.ServoInfo.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.GetEscID.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.GetMaintenanceInformation.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.GetMaintenanceInformation_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.GetMaintenanceInformation_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.GetMajorConfig.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.GetMajorConfig_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.GetMajorConfig_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.RawCommand.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SelfTest.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SelfTest_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SelfTest_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetAngle.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetAngle_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetAngle_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetBaud.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetBaud_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetBaud_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetDirection.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetDirection_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetDirection_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetID.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetID_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetID_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetLED.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetLED_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetLED_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetReportingFrequency.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetReportingFrequency_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetReportingFrequency_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetThrottleSource.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetThrottleSource_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetThrottleSource_res.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.StatusMsg1.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.StatusMsg2.h \
+ ../dsdlc_generated/Inc/../inc/com.hobbywing.esc.StatusMsg3.h \
+ ../dsdlc_generated/Inc/../inc/com.tmotor.esc.FocCtrl.h \
+ ../dsdlc_generated/Inc/../inc/com.tmotor.esc.ParamCfg.h \
+ ../dsdlc_generated/Inc/../inc/com.tmotor.esc.ParamGet.h \
+ ../dsdlc_generated/Inc/../inc/com.tmotor.esc.PUSHCAN.h \
+ ../dsdlc_generated/Inc/../inc/com.tmotor.esc.PUSHSCI.h \
+ ../dsdlc_generated/Inc/../inc/com.volz.servo.ActuatorStatus.h \
+ ../dsdlc_generated/Inc/../inc/com.xacti.CopterAttStatus.h \
+ ../dsdlc_generated/Inc/../inc/com.xacti.GimbalAttitudeStatus.h \
+ ../dsdlc_generated/Inc/../inc/com.xacti.GimbalControlData.h \
+ ../dsdlc_generated/Inc/../inc/com.xacti.GnssStatus.h \
+ ../dsdlc_generated/Inc/../inc/com.xacti.GnssStatusReq.h \
+ ../dsdlc_generated/Inc/../inc/cuav.equipment.power.CBAT.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.protocol.CanStats.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.protocol.Stats.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.remoteid.ArmStatus.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.remoteid.BasicID.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.remoteid.Location.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.remoteid.OperatorID.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.remoteid.SecureCommand.h \
+ ../dsdlc_generated/Inc/../inc/../inc/dronecan.remoteid.SecureCommand_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/dronecan.remoteid.SecureCommand_res.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.remoteid.SelfID.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.remoteid.System.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.sensors.hygrometer.Hygrometer.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.sensors.magnetometer.MagneticFieldStrengthHiRes.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.sensors.rc.RCInput.h \
+ ../dsdlc_generated/Inc/../inc/dronecan.sensors.rpm.RPM.h \
+ ../dsdlc_generated/Inc/../inc/mppt.OutputEnable.h \
+ ../dsdlc_generated/Inc/../inc/../inc/mppt.OutputEnable_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/mppt.OutputEnable_res.h \
+ ../dsdlc_generated/Inc/../inc/mppt.Stream.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.CoarseOrientation.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.actuator.ArrayCommand.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.equipment.actuator.Command.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.actuator.Status.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.ahrs.MagneticFieldStrength.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.ahrs.MagneticFieldStrength2.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.ahrs.RawIMU.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.ahrs.Solution.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.AngleOfAttack.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.IndicatedAirspeed.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.RawAirData.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.Sideslip.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.StaticPressure.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.StaticTemperature.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.TrueAirspeed.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.device.Temperature.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.esc.RawCommand.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.esc.RPMCommand.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.esc.Status.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.esc.StatusExtended.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.Auxiliary.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.ECEFPositionVelocity.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.Fix.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.Fix2.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.RTCMStream.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.hardpoint.Command.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.hardpoint.Status.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.ice.FuelTankStatus.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.ice.reciprocating.CylinderStatus.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.ice.reciprocating.Status.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.indication.BeepCommand.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.indication.LightsCommand.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.equipment.indication.SingleLightCommand.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.equipment.indication.RGB565.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.power.BatteryInfo.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.power.CircuitStatus.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.power.PrimaryPowerSupplyStatus.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.range_sensor.Measurement.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.equipment.safety.ArmingStatus.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.navigation.GlobalNavigationSolution.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.AccessCommandShell.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.AccessCommandShell_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.AccessCommandShell_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.CANIfaceStats.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.debug.KeyValue.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.debug.LogLevel.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.debug.LogMessage.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.dynamic_node_id.Allocation.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.Entry.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.dynamic_node_id.server.Discovery.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.DataTypeKind.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.enumeration.Begin.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.enumeration.Begin_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.enumeration.Begin_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.enumeration.Indication.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.NumericValue.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.param.Empty.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.file.Path.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.file.Delete.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Delete_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Delete_res.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.file.Error.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.file.EntryType.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.file.GetInfo.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.GetInfo_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.GetInfo_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.file.Read.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Read_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Read_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.file.Write.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Write_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Write_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.GetDataTypeInfo.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetDataTypeInfo_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetDataTypeInfo_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.GetNodeInfo.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetNodeInfo_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetNodeInfo_res.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.HardwareVersion.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.NodeStatus.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.SoftwareVersion.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.GetTransportStats.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetTransportStats_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetTransportStats_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.GlobalTimeSync.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.param.ExecuteOpcode.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.ExecuteOpcode_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.ExecuteOpcode_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.param.GetSet.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.GetSet_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.param.Value.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.GetSet_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.Panic.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.protocol.RestartNode.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.RestartNode_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.RestartNode_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.tunnel.Broadcast.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.tunnel.Protocol.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.tunnel.Call.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.tunnel.Call_req.h \
+ ../dsdlc_generated/Inc/../inc/../inc/uavcan.tunnel.Call_res.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.tunnel.SerialConfig.h \
+ ../dsdlc_generated/Inc/../inc/uavcan.tunnel.Targetted.h \
+ ../Core/Inc/canard_stm32_driver.h ../Core/Inc/node_settings.h \
+ ../ServoControl/Inc/servo_control.hpp
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -262,204 +263,205 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/gpio.h:
 ../Core/Inc/canard.h:
 ../Core/Inc/_timespec.h:
-../Core/Src/../dsdlc_generated/inc/dronecan_msgs.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.power.BatteryCells.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.power.BatteryContinuous.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.power.BatteryInfoAux.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.Timestamp.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.power.BatteryPeriodic.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.proximity_sensor.Proximity.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.equipment.trafficmonitor.TrafficReport.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.gnss.Heading.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.gnss.MovingBaselineData.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.gnss.RelPosHeading.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.gnss.Status.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.indication.Button.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.indication.NotifyState.h:
-../Core/Src/../dsdlc_generated/inc/../inc/ardupilot.indication.SafetyState.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hex.equipment.flow.Measurement.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.himark.servo.ServoCmd.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.himark.servo.ServoInfo.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.GetEscID.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.GetMaintenanceInformation.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.GetMaintenanceInformation_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.GetMaintenanceInformation_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.GetMajorConfig.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.GetMajorConfig_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.GetMajorConfig_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.RawCommand.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SelfTest.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SelfTest_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SelfTest_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetAngle.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetAngle_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetAngle_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetBaud.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetBaud_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetBaud_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetDirection.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetDirection_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetDirection_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetID.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetID_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetID_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetLED.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetLED_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetLED_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetReportingFrequency.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetReportingFrequency_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetReportingFrequency_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.SetThrottleSource.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetThrottleSource_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/com.hobbywing.esc.SetThrottleSource_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.StatusMsg1.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.StatusMsg2.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.hobbywing.esc.StatusMsg3.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.FocCtrl.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.ParamCfg.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.ParamGet.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.PUSHCAN.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.tmotor.esc.PUSHSCI.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.volz.servo.ActuatorStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.CopterAttStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.GimbalAttitudeStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.GimbalControlData.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.GnssStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/com.xacti.GnssStatusReq.h:
-../Core/Src/../dsdlc_generated/inc/../inc/cuav.equipment.power.CBAT.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.protocol.CanStats.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.protocol.Stats.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.ArmStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.BasicID.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.Location.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.OperatorID.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.SecureCommand.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/dronecan.remoteid.SecureCommand_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/dronecan.remoteid.SecureCommand_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.SelfID.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.remoteid.System.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.sensors.hygrometer.Hygrometer.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.sensors.magnetometer.MagneticFieldStrengthHiRes.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.sensors.rc.RCInput.h:
-../Core/Src/../dsdlc_generated/inc/../inc/dronecan.sensors.rpm.RPM.h:
-../Core/Src/../dsdlc_generated/inc/../inc/mppt.OutputEnable.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/mppt.OutputEnable_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/mppt.OutputEnable_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/mppt.Stream.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.CoarseOrientation.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.actuator.ArrayCommand.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.equipment.actuator.Command.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.actuator.Status.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ahrs.MagneticFieldStrength.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ahrs.MagneticFieldStrength2.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ahrs.RawIMU.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ahrs.Solution.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.AngleOfAttack.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.IndicatedAirspeed.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.RawAirData.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.Sideslip.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.StaticPressure.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.StaticTemperature.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.air_data.TrueAirspeed.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.device.Temperature.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.esc.RawCommand.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.esc.RPMCommand.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.esc.Status.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.esc.StatusExtended.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.Auxiliary.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.ECEFPositionVelocity.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.Fix.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.Fix2.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.gnss.RTCMStream.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.hardpoint.Command.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.hardpoint.Status.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ice.FuelTankStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ice.reciprocating.CylinderStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.ice.reciprocating.Status.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.indication.BeepCommand.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.indication.LightsCommand.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.equipment.indication.SingleLightCommand.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.equipment.indication.RGB565.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.power.BatteryInfo.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.power.CircuitStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.power.PrimaryPowerSupplyStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.range_sensor.Measurement.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.equipment.safety.ArmingStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.navigation.GlobalNavigationSolution.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.AccessCommandShell.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.AccessCommandShell_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.AccessCommandShell_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.CANIfaceStats.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.debug.KeyValue.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.debug.LogLevel.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.debug.LogMessage.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.dynamic_node_id.Allocation.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.Entry.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.dynamic_node_id.server.Discovery.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.DataTypeKind.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.enumeration.Begin.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.enumeration.Begin_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.enumeration.Begin_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.enumeration.Indication.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.NumericValue.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.param.Empty.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.file.Path.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.Delete.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Delete_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Delete_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.file.Error.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.EntryType.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.GetInfo.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.GetInfo_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.GetInfo_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.Read.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Read_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Read_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.file.Write.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Write_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.file.Write_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.GetDataTypeInfo.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetDataTypeInfo_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetDataTypeInfo_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.GetNodeInfo.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetNodeInfo_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetNodeInfo_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.HardwareVersion.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.NodeStatus.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.SoftwareVersion.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.GetTransportStats.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetTransportStats_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.GetTransportStats_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.GlobalTimeSync.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.param.ExecuteOpcode.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.ExecuteOpcode_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.ExecuteOpcode_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.param.GetSet.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.GetSet_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/../inc/uavcan.protocol.param.Value.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.param.GetSet_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.Panic.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.protocol.RestartNode.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.RestartNode_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.protocol.RestartNode_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.Broadcast.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.tunnel.Protocol.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.Call.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.tunnel.Call_req.h:
-../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.tunnel.Call_res.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.SerialConfig.h:
-../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.Targetted.h:
+../dsdlc_generated/Inc/dronecan_msgs.h:
+../dsdlc_generated/Inc/../inc/ardupilot.equipment.power.BatteryCells.h:
+../dsdlc_generated/Inc/../inc/ardupilot.equipment.power.BatteryContinuous.h:
+../dsdlc_generated/Inc/../inc/ardupilot.equipment.power.BatteryInfoAux.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.Timestamp.h:
+../dsdlc_generated/Inc/../inc/ardupilot.equipment.power.BatteryPeriodic.h:
+../dsdlc_generated/Inc/../inc/ardupilot.equipment.proximity_sensor.Proximity.h:
+../dsdlc_generated/Inc/../inc/ardupilot.equipment.trafficmonitor.TrafficReport.h:
+../dsdlc_generated/Inc/../inc/ardupilot.gnss.Heading.h:
+../dsdlc_generated/Inc/../inc/ardupilot.gnss.MovingBaselineData.h:
+../dsdlc_generated/Inc/../inc/ardupilot.gnss.RelPosHeading.h:
+../dsdlc_generated/Inc/../inc/ardupilot.gnss.Status.h:
+../dsdlc_generated/Inc/../inc/ardupilot.indication.Button.h:
+../dsdlc_generated/Inc/../inc/ardupilot.indication.NotifyState.h:
+../dsdlc_generated/Inc/../inc/ardupilot.indication.SafetyState.h:
+../dsdlc_generated/Inc/../inc/com.hex.equipment.flow.Measurement.h:
+../dsdlc_generated/Inc/../inc/com.himark.servo.ServoCmd.h:
+../dsdlc_generated/Inc/../inc/com.himark.servo.ServoInfo.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.GetEscID.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.GetMaintenanceInformation.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.GetMaintenanceInformation_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.GetMaintenanceInformation_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.GetMajorConfig.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.GetMajorConfig_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.GetMajorConfig_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.RawCommand.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SelfTest.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SelfTest_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SelfTest_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetAngle.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetAngle_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetAngle_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetBaud.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetBaud_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetBaud_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetDirection.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetDirection_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetDirection_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetID.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetID_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetID_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetLED.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetLED_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetLED_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetReportingFrequency.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetReportingFrequency_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetReportingFrequency_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.SetThrottleSource.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetThrottleSource_req.h:
+../dsdlc_generated/Inc/../inc/../inc/com.hobbywing.esc.SetThrottleSource_res.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.StatusMsg1.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.StatusMsg2.h:
+../dsdlc_generated/Inc/../inc/com.hobbywing.esc.StatusMsg3.h:
+../dsdlc_generated/Inc/../inc/com.tmotor.esc.FocCtrl.h:
+../dsdlc_generated/Inc/../inc/com.tmotor.esc.ParamCfg.h:
+../dsdlc_generated/Inc/../inc/com.tmotor.esc.ParamGet.h:
+../dsdlc_generated/Inc/../inc/com.tmotor.esc.PUSHCAN.h:
+../dsdlc_generated/Inc/../inc/com.tmotor.esc.PUSHSCI.h:
+../dsdlc_generated/Inc/../inc/com.volz.servo.ActuatorStatus.h:
+../dsdlc_generated/Inc/../inc/com.xacti.CopterAttStatus.h:
+../dsdlc_generated/Inc/../inc/com.xacti.GimbalAttitudeStatus.h:
+../dsdlc_generated/Inc/../inc/com.xacti.GimbalControlData.h:
+../dsdlc_generated/Inc/../inc/com.xacti.GnssStatus.h:
+../dsdlc_generated/Inc/../inc/com.xacti.GnssStatusReq.h:
+../dsdlc_generated/Inc/../inc/cuav.equipment.power.CBAT.h:
+../dsdlc_generated/Inc/../inc/dronecan.protocol.CanStats.h:
+../dsdlc_generated/Inc/../inc/dronecan.protocol.Stats.h:
+../dsdlc_generated/Inc/../inc/dronecan.remoteid.ArmStatus.h:
+../dsdlc_generated/Inc/../inc/dronecan.remoteid.BasicID.h:
+../dsdlc_generated/Inc/../inc/dronecan.remoteid.Location.h:
+../dsdlc_generated/Inc/../inc/dronecan.remoteid.OperatorID.h:
+../dsdlc_generated/Inc/../inc/dronecan.remoteid.SecureCommand.h:
+../dsdlc_generated/Inc/../inc/../inc/dronecan.remoteid.SecureCommand_req.h:
+../dsdlc_generated/Inc/../inc/../inc/dronecan.remoteid.SecureCommand_res.h:
+../dsdlc_generated/Inc/../inc/dronecan.remoteid.SelfID.h:
+../dsdlc_generated/Inc/../inc/dronecan.remoteid.System.h:
+../dsdlc_generated/Inc/../inc/dronecan.sensors.hygrometer.Hygrometer.h:
+../dsdlc_generated/Inc/../inc/dronecan.sensors.magnetometer.MagneticFieldStrengthHiRes.h:
+../dsdlc_generated/Inc/../inc/dronecan.sensors.rc.RCInput.h:
+../dsdlc_generated/Inc/../inc/dronecan.sensors.rpm.RPM.h:
+../dsdlc_generated/Inc/../inc/mppt.OutputEnable.h:
+../dsdlc_generated/Inc/../inc/../inc/mppt.OutputEnable_req.h:
+../dsdlc_generated/Inc/../inc/../inc/mppt.OutputEnable_res.h:
+../dsdlc_generated/Inc/../inc/mppt.Stream.h:
+../dsdlc_generated/Inc/../inc/uavcan.CoarseOrientation.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.actuator.ArrayCommand.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.equipment.actuator.Command.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.actuator.Status.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.ahrs.MagneticFieldStrength.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.ahrs.MagneticFieldStrength2.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.ahrs.RawIMU.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.ahrs.Solution.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.AngleOfAttack.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.IndicatedAirspeed.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.RawAirData.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.Sideslip.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.StaticPressure.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.StaticTemperature.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.air_data.TrueAirspeed.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.device.Temperature.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.esc.RawCommand.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.esc.RPMCommand.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.esc.Status.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.esc.StatusExtended.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.Auxiliary.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.ECEFPositionVelocity.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.Fix.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.Fix2.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.gnss.RTCMStream.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.hardpoint.Command.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.hardpoint.Status.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.ice.FuelTankStatus.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.ice.reciprocating.CylinderStatus.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.ice.reciprocating.Status.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.indication.BeepCommand.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.indication.LightsCommand.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.equipment.indication.SingleLightCommand.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.equipment.indication.RGB565.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.power.BatteryInfo.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.power.CircuitStatus.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.power.PrimaryPowerSupplyStatus.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.range_sensor.Measurement.h:
+../dsdlc_generated/Inc/../inc/uavcan.equipment.safety.ArmingStatus.h:
+../dsdlc_generated/Inc/../inc/uavcan.navigation.GlobalNavigationSolution.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.AccessCommandShell.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.AccessCommandShell_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.AccessCommandShell_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.CANIfaceStats.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.debug.KeyValue.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.debug.LogLevel.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.debug.LogMessage.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.dynamic_node_id.Allocation.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries_req.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.Entry.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.AppendEntries_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.dynamic_node_id.server.Discovery.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.dynamic_node_id.server.RequestVote_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.DataTypeKind.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.enumeration.Begin.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.enumeration.Begin_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.enumeration.Begin_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.enumeration.Indication.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.NumericValue.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.param.Empty.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate_req.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.file.Path.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.BeginFirmwareUpdate_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.file.Delete.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Delete_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Delete_res.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.file.Error.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.file.EntryType.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.GetDirectoryEntryInfo_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.file.GetInfo.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.GetInfo_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.GetInfo_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.file.Read.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Read_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Read_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.file.Write.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Write_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.file.Write_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.GetDataTypeInfo.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetDataTypeInfo_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetDataTypeInfo_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.GetNodeInfo.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetNodeInfo_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetNodeInfo_res.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.HardwareVersion.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.NodeStatus.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.SoftwareVersion.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.GetTransportStats.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetTransportStats_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.GetTransportStats_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.GlobalTimeSync.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.param.ExecuteOpcode.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.ExecuteOpcode_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.ExecuteOpcode_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.param.GetSet.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.GetSet_req.h:
+../dsdlc_generated/Inc/../inc/../inc/../inc/uavcan.protocol.param.Value.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.param.GetSet_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.Panic.h:
+../dsdlc_generated/Inc/../inc/uavcan.protocol.RestartNode.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.RestartNode_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.protocol.RestartNode_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.tunnel.Broadcast.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.tunnel.Protocol.h:
+../dsdlc_generated/Inc/../inc/uavcan.tunnel.Call.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.tunnel.Call_req.h:
+../dsdlc_generated/Inc/../inc/../inc/uavcan.tunnel.Call_res.h:
+../dsdlc_generated/Inc/../inc/uavcan.tunnel.SerialConfig.h:
+../dsdlc_generated/Inc/../inc/uavcan.tunnel.Targetted.h:
 ../Core/Inc/canard_stm32_driver.h:
 ../Core/Inc/node_settings.h:
+../ServoControl/Inc/servo_control.hpp:

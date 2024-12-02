@@ -25,4 +25,5 @@
 .vscode/
 Tools/*/build/
 Debug/
-/.metadata/
+.Debug/
+.metadata/
