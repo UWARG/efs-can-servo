@@ -168,6 +168,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 				break;
 			case RX_ENQUEUE_OVERFLOW:
 				printf("rxQueue is full, oldest frame has been removed");
+				break;
 			case RX_ENQUEUE_SUCCESS:
 				break;
 		}
