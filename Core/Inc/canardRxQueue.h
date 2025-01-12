@@ -8,8 +8,6 @@ struct CanardRxQueueItem {
     CanardCANFrame frame;
 };
 
-extern struct CanardRxQueueItem* rxQueueHead;
-extern struct CanardRxQueueItem* rxQueueTail;
 extern uint8_t rxQueueSize;
 
 typedef enum {
