@@ -157,17 +157,30 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 	}
 	else if (rx_res > 0)        // Success - process the frame
 	{
-		enqueueRxFrame(&rx_frame);
+		enqueueRxReturnCode enqueueRxReturnCode = enqueueRxFrame(&rx_frame);
+
+		switch (enqueueRxReturnCode) {
+			case RX_ENQUEUE_EMPTYITEM:
+				printf("Rx frame is empty");
+				break;
+			case RX_ENQUEUE_MALLOCFAIL:
+				printf("CanardRxQueueItem memory allocation failed");
+				break;
+			case RX_ENQUEUE_OVERFLOW:
+				printf("rxQueue is full, oldest frame has been removed");
+			case RX_ENQUEUE_SUCCESS:
+				break;
+		}
 	}
 }
 
 void processCanardRxQueue() {
-  struct CanardRxQueueItem* currentRxFrame = dequeueRxFrame();
-  const uint64_t timestamp = HAL_GetTick() * 1000ULL;
+	struct dequeueRxReturnItem dequeueRxReturnItem = dequeueRxFrame();
+	const uint64_t timestamp = HAL_GetTick() * 1000ULL;
 
-  canardHandleRxFrame(&canard, &currentRxFrame->frame, timestamp);
-
-  free(currentRxFrame);
+	if (dequeueRxReturnItem.isSuccess) {
+		canardHandleRxFrame(&canard, &(dequeueRxReturnItem.frame), timestamp);
+	}
 }
 
 // NOTE: All canard handlers and senders are based on this reference: https://dronecan.github.io/Specification/7._List_of_standard_data_types/
