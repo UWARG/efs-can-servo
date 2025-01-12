@@ -1,9 +1,10 @@
   #include <stdlib.h>
   #include <canard.h>
   #include "canardRxQueue.h"
+  #define MAX_QUEUE_SIZE 100
 
-  struct CanardRxQueueItem* rxQueueHead = NULL;
-  struct CanardRxQueueItem* rxQueueTail = NULL;
+  static struct CanardRxQueueItem* rxQueueHead = NULL;
+  static struct CanardRxQueueItem* rxQueueTail = NULL;
   uint8_t rxQueueSize = 0;
 
 /*
