@@ -1,6 +1,5 @@
 #ifndef CANARD_RX_QUEUE_H
 #define CANARD_RX_QUEUE_H
-#define MAX_QUEUE_SIZE 100
 
 #include <canard.h>
 
