@@ -1,7 +1,7 @@
 #ifndef CANARD_RX_QUEUE_H
 #define CANARD_RX_QUEUE_H
+#define MAX_QUEUE_SIZE 100
 
-#include <stdlib.h>
 #include <canard.h>
 
 struct CanardRxQueueItem {
@@ -11,8 +11,21 @@ struct CanardRxQueueItem {
 
 extern struct CanardRxQueueItem* rxQueueHead;
 extern struct CanardRxQueueItem* rxQueueTail;
+extern uint8_t rxQueueSize;
 
-void enqueueRxFrame(CanardCANFrame* rx_frame);
-struct CanardRxQueueItem* dequeueRxFrame();
+typedef enum {
+  RX_ENQUEUE_SUCCESS,
+  RX_ENQUEUE_EMPTYITEM,
+  RX_ENQUEUE_MALLOCFAIL,
+  RX_ENQUEUE_OVERFLOW
+} enqueueRxReturnCode;
+
+struct dequeueRxReturnItem {
+    bool isSuccess;
+    CanardCANFrame frame;
+};
+
+enqueueRxReturnCode enqueueRxFrame(CanardCANFrame* rx_frame);
+struct dequeueRxReturnItem dequeueRxFrame();
 
 #endif
