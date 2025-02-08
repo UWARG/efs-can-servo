@@ -1,5 +1,6 @@
 "./Core/Src/can.o"
 "./Core/Src/canard.o"
+"./Core/Src/canardRxQueue.o"
 "./Core/Src/canard_stm32_driver.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
