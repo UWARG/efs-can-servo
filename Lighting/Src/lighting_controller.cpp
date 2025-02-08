@@ -1,14 +1,17 @@
 /*
  * lighting_controller.cpp
  *
- * This file handles all of the higher level logic / interfacing to the can board. This might be a class as well.
+ * GOAL: Repurpose to control the Neopixel LEDs on the CAN Single Servo Board
+ * 
+ * This file handles all of the higher level logic / interfacing to the can board.
  *
- * It creates 6 instances of the WS2812 LED's
+ * It will create 3 instances of the WS2812 LED's for each LED on the single servo board
  *
  * It handles the final output buffer that is sent to DMA, as well as DMA transfer half complete callback
  *
- *  Created on: Nov 21, 2024
+ *  Created on: Feb 2, 2025
  *      Author: Anni and Fola
+ * 		Code Ported From: efs-can-lighting/Lighting/Src/lighting_controller.cpp
  */
 
 #include <cstring>
@@ -24,8 +27,7 @@
 
 extern TIM_HandleTypeDef htim7;
 
-// TODO: custom types?
-static constexpr uint8_t NUM_LEDS = 6;
+static constexpr uint8_t NUM_LEDS = 3;
 static constexpr uint8_t NUM_LEDS_PADDING = 6;
 static constexpr uint16_t DMA_OUTPUT_BUFFER_SIZE = (NUM_LEDS
 		+ NUM_LEDS_PADDING * 2) * 24 * 2;		// TODO: remove magic num
