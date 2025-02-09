@@ -28,7 +28,7 @@
 extern TIM_HandleTypeDef htim7;
 
 static constexpr uint8_t NUM_LEDS = 3;
-static constexpr uint8_t NUM_LEDS_PADDING = 6;
+static constexpr uint8_t NUM_LEDS_PADDING = 3;
 static constexpr uint16_t DMA_OUTPUT_BUFFER_SIZE = (NUM_LEDS
 		+ NUM_LEDS_PADDING * 2) * 24 * 2;		// TODO: remove magic num
 static constexpr uint16_t BANK_OUTPUT_BUFFER_SIZE = (NUM_LEDS
