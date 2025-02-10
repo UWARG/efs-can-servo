@@ -42,7 +42,6 @@ public:
 	/**
 	 * Initializes the LED to be full brightness on
 	 *
-	 * TODO: Add overloading to allow "on" to have a specified brightness
 	 */
 	void initialize_led_on();
 	void initialize_led_on(uint8_t *led_output_buffer);
