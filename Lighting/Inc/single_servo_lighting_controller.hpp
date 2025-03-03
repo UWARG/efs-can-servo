@@ -54,14 +54,12 @@ public:
 	void set_led_off(uint8_t index);
 
 	/**
-	 * Blink an LED once for 10ms.
-	 *
-	 * @param desired_colour : RGB_colour_t that you want set.
+	 * Blink an LED once for 1ms.
 	 * 
 	 * @param index : The LED on the lighting board that you want to set.
 	 * 
 	 */
-	void blink_led_once(RGB_colour_t desired_colour,uint8_t index);
+	void blink_led_once(uint8_t index);
 
 private:
 	static constexpr uint8_t NUM_LEDS = 3;

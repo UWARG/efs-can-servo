@@ -227,7 +227,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Src/../dsdlc_generated/inc/../inc/../inc/uavcan.tunnel.Call_res.h \
  ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.SerialConfig.h \
  ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.Targetted.h \
- ../Core/Inc/canard_stm32_driver.h ../Core/Inc/node_settings.h
+ ../Core/Inc/canard_stm32_driver.h ../Core/Inc/node_settings.h \
+ ../Core/Inc/canardRxQueue.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -463,3 +464,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Src/../dsdlc_generated/inc/../inc/uavcan.tunnel.Targetted.h:
 ../Core/Inc/canard_stm32_driver.h:
 ../Core/Inc/node_settings.h:
+../Core/Inc/canardRxQueue.h:
