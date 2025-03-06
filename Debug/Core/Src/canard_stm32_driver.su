@@ -1,2 +1,8 @@
-../Core/Src/canard_stm32_driver.c:24:9:canardSTM32Recieve	64	static
-../Core/Src/canard_stm32_driver.c:74:9:canardSTM32Transmit	48	static
+../Core/Src/canard_stm32_driver.c:18:6:init	32	static
+../Core/Src/canard_stm32_driver.c:45:9:canardSTM32Recieve	64	static
+../Core/Src/canard_stm32_driver.c:95:9:canardSTM32Transmit	48	static
+../Core/Src/canard_stm32_driver.c:140:6:getUniqueID	32	static
+../Core/Src/canard_stm32_driver.c:151:6:processCanardRxQueue	72	static
+../Core/Src/canard_stm32_driver.c:160:6:processCanardTxQueue	24	static
+../Core/Src/canard_stm32_driver.c:177:6:processTasks	48	static
+../Core/Src/canard_stm32_driver.c:191:6:canardSTM32RxFifo0MsgPending	40	static

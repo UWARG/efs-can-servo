@@ -96,19 +96,6 @@ int clock_gettime(clockid_t clk_id, struct timespec *tp) {
 }
 
 
-/*
-  get a 16 byte unique ID for this node, this should be based on the CPU unique ID or other unique ID
- */
-void getUniqueID(uint8_t id[16]){
-	uint32_t HALUniqueIDs[3];
-// Make Unique ID out of the 96-bit STM32 UID and fill the rest with 0s
-	memset(id, 0, 16);
-	HALUniqueIDs[0] = HAL_GetUIDw0();
-	HALUniqueIDs[1] = HAL_GetUIDw1();
-	HALUniqueIDs[2] = HAL_GetUIDw2();
-	memcpy(id, HALUniqueIDs, 12);
-}
-
 // Might have to change the code if the handler (&htim) changes based on # of servos were controlling
 void setServoPWM(uint8_t ServoNum){
 	switch (ServoNum) {
@@ -147,41 +134,7 @@ void startAllPWM(){
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
-	// Receiving
-	CanardCANFrame rx_frame;
-
-	const int16_t rx_res = canardSTM32Recieve(hcan, CAN_RX_FIFO0, &rx_frame);
-
-	if (rx_res < 0) {
-		printf("Receive error %d\n", rx_res);
-	}
-	else if (rx_res > 0)        // Success - process the frame
-	{
-		enqueueRxReturnCode enqueueRxReturnCode = enqueueRxFrame(&rx_frame);
-
-		switch (enqueueRxReturnCode) {
-			case RX_ENQUEUE_EMPTYITEM:
-				printf("Rx frame is empty");
-				break;
-			case RX_ENQUEUE_MALLOCFAIL:
-				printf("CanardRxQueueItem memory allocation failed");
-				break;
-			case RX_ENQUEUE_OVERFLOW:
-				printf("rxQueue is full, oldest frame has been removed");
-				break;
-			case RX_ENQUEUE_SUCCESS:
-				break;
-		}
-	}
-}
-
-void processCanardRxQueue() {
-	struct dequeueRxReturnItem dequeueRxReturnItem = dequeueRxFrame();
-	const uint64_t timestamp = HAL_GetTick() * 1000ULL;
-
-	if (dequeueRxReturnItem.isSuccess) {
-		canardHandleRxFrame(&canard, &(dequeueRxReturnItem.frame), timestamp);
-	}
+  canardSTM32RxFifo0MsgPending(hcan);
 }
 
 // NOTE: All canard handlers and senders are based on this reference: https://dronecan.github.io/Specification/7._List_of_standard_data_types/
@@ -474,31 +427,10 @@ void onTransferReceived(CanardInstance *ins, CanardRxTransfer *transfer) {
 	}
 }
 
-void processCanardTxQueue(CAN_HandleTypeDef *hcan) {
-	// Transmitting
-
-	for (const CanardCANFrame *tx_frame ; (tx_frame = canardPeekTxQueue(&canard)) != NULL;) {
-		const int16_t tx_res = canardSTM32Transmit(hcan, tx_frame);
-
-		if (tx_res < 0) {
-			printf("Transmit error %d\n", tx_res);
-		} else if (tx_res > 0) {
-			printf("Successfully transmitted message\n");
-		}
-
-		// Pop canardTxQueue either way
-		canardPopTxQueue(&canard);
-	}
-}
-
 /*
   This function is called at 1 Hz rate from the main loop.
 */
-void process1HzTasks(uint64_t timestamp_usec) {
-    /*
-      Purge transfers that are no longer transmitted. This can free up some memory
-    */
-    canardCleanupStaleTransfers(&canard, timestamp_usec);
+void user1HzTasks(uint64_t timestamp_usec) {
 
     /*
       Transmit the node status message
@@ -590,23 +522,26 @@ int main(void)
 	canfil.FilterScale = CAN_FILTERSCALE_32BIT;
 	canfil.FilterActivation = ENABLE;
 	canfil.SlaveStartFilterBank = 14;
-
 	HAL_CAN_ConfigFilter(&hcan1,&canfil);
-  	HAL_CAN_Start(&hcan1);
-  	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
+
+    InitTypeDef initParams;
+    initParams.hcan = &hcan1;
+    initParams.canard = &canard;
+    initParams.mem_pool = memory_pool;
+    initParams.mem_pool_size = sizeof(memory_pool);
+    initParams.on_recep = onTransferReceived;
+    initParams.should_accept = shouldAcceptTransfer;
+	init(&initParams);
 
 	// configuring the pwm wave for servo module
 	startAllPWM();
 
-	canardInit(&canard,
-			  	  memory_pool,
-				  sizeof(memory_pool),
-				  onTransferReceived,
-				  shouldAcceptTransfer,
-				  NULL);
+//
+//    init(&initParams, &canard, memory_pool, onTransferReceived, shouldAcceptTransfer);
 
 	uint64_t next_1hz_service_at = HAL_GetTick();
-	uint64_t next_50hz_service_at = HAL_GetTick();
+	uint64_t user_next_1hz_service_at = next_1hz_service_at;
+	uint64_t user_next_50hz_service_at = next_1hz_service_at;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -616,19 +551,16 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-	  processCanardTxQueue(&hcan1);
-	
- 	  processCanardRxQueue();
+      processTasks(&hcan1, &canard, &next_1hz_service_at);
 
 	  const uint64_t ts = HAL_GetTick();
 
-	  if (ts >= next_1hz_service_at){
-		  next_1hz_service_at += 1000ULL;
-		  process1HzTasks(ts);
+	  if (ts >= user_next_1hz_service_at){
+		  user_next_1hz_service_at += 1000ULL;
+		  user1HzTasks(ts);
 	  }
-	  if (ts >= next_50hz_service_at){
-		  next_50hz_service_at += 1000ULL/50U;
+	  if (ts >= user_next_50hz_service_at){
+		  user_next_50hz_service_at += 1000ULL/50U;
 		  send_ServoStatus();
 	  }
   }
@@ -659,7 +591,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 1;
-  RCC_OscInitStruct.PLL.PLLN = 12;
+  RCC_OscInitStruct.PLL.PLLN = 20;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
@@ -677,7 +609,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
