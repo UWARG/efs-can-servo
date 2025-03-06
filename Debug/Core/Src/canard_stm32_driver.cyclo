@@ -1,2 +1,8 @@
-../Core/Src/canard_stm32_driver.c:24:9:canardSTM32Recieve	5
-../Core/Src/canard_stm32_driver.c:74:9:canardSTM32Transmit	6
+../Core/Src/canard_stm32_driver.c:18:6:init	1
+../Core/Src/canard_stm32_driver.c:45:9:canardSTM32Recieve	5
+../Core/Src/canard_stm32_driver.c:95:9:canardSTM32Transmit	6
+../Core/Src/canard_stm32_driver.c:140:6:getUniqueID	1
+../Core/Src/canard_stm32_driver.c:151:6:processCanardRxQueue	2
+../Core/Src/canard_stm32_driver.c:160:6:processCanardTxQueue	4
+../Core/Src/canard_stm32_driver.c:177:6:processTasks	2
+../Core/Src/canard_stm32_driver.c:191:6:canardSTM32RxFifo0MsgPending	7
