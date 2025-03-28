@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-#include "conversions.hpp"
+#include "conversions.h"
 
 static constexpr uint8_t PWM_LO = 19;
 static constexpr uint8_t PWM_HI = 38;

@@ -1,5 +1,5 @@
 /*
- * lighting_controller.cpp
+ * single_servo_lighting_controller.cpp
  * 
  * This file handles all of the higher level logic / interfacing to the single servo board.
  *
@@ -18,24 +18,8 @@
 #include "tim.h"
  
 #include "single_servo_lighting_controller.hpp"
-#include "ws2812.hpp"
-#include "conversions.hpp"
-
-extern TIM_HandleTypeDef htim7; // TODO: Change timer handler (15 or 16 maybe?)
-
-static constexpr uint8_t NUM_LEDS = 3;
-static constexpr uint8_t NUM_LEDS_PADDING = 3;
-static constexpr uint16_t DMA_OUTPUT_BUFFER_SIZE = (NUM_LEDS
-    + NUM_LEDS_PADDING * 2) * 24 * 2;		// TODO: remove magic num
-static constexpr uint16_t BANK_OUTPUT_BUFFER_SIZE = (NUM_LEDS
-    + NUM_LEDS_PADDING * 2) * 24 * 2;	// TODO: remove magic num
-
-uint8_t dma_output_buffer[DMA_OUTPUT_BUFFER_SIZE];
-uint8_t bank_output_buffer[BANK_OUTPUT_BUFFER_SIZE];
-
-WS2812 leds[NUM_LEDS];
-
-SingleServoLightingController controller(dma_output_buffer,bank_output_buffer,leds);
+#include "ws2812.h"
+#include "conversions.h"
 
 SingleServoLightingController::SingleServoLightingController(uint8_t *dma_output_buffer, 
         uint8_t *bank_output_buffer,WS2812 *leds) {
@@ -45,7 +29,7 @@ SingleServoLightingController::SingleServoLightingController(uint8_t *dma_output
 	initialize_bank_buffer_on();
 	initialize_dma_buffer();
 
-    // Initialize all of the internal LEDs
+    // Initialize all of the internal LEDs as off
 	for (int i = 0; i < NUM_LEDS; ++i) {
 		this->leds[i].initialize_led_off(
 				bank_output_buffer + NUM_LEDS_PADDING * 24 + 24 * i);
@@ -54,25 +38,25 @@ SingleServoLightingController::SingleServoLightingController(uint8_t *dma_output
 
 void SingleServoLightingController::start_lighting_control() {
 	HAL_TIMEx_PWMN_Start_DMA(&htim1, TIM_CHANNEL_2,
-		(uint32_t*) dma_output_buffer, DMA_OUTPUT_BUFFER_SIZE);
+		(uint32_t*) this->dma_buffer, DMA_OUTPUT_BUFFER_SIZE);
 }
 
-void SingleServoLightingController::set_led_on(RGB_colour_t desired_colour, uint8_t index) {
-	this->leds[index].set_led_colour(desired_colour);
+void SingleServoLightingController::set_led_on(uint8_t index) {
+	this->leds[index].set_brightness(100);
 }
 
 void SingleServoLightingController::set_led_off(uint8_t index) {
-	this->leds[index].initialize_led_off();
+	this->leds[index].set_brightness(0);
 }
 
 void SingleServoLightingController::blink_led_once(uint8_t index) {
-	set_led_on(this->leds[index].get_led_colour(),index);
-	HAL_Delay(1);
+	set_led_on(index);
+	HAL_Delay(10);
 	set_led_off(index);
 }
 
 void SingleServoLightingController::recolour_led(RGB_colour_t desired_colour, uint8_t index) {
-	this->leds[index].set_led_colour(desired_colour);
+	this->leds[index].set_led_colour(desired_colour,0);
 }
 
 /////////////////
@@ -108,8 +92,8 @@ void SingleServoLightingController::initialize_bank_buffer_on() {
 
 void SingleServoLightingController::initialize_dma_buffer() {
 	// memcpy first bank
-	std::memcpy(this->dma_buffer, bank_output_buffer, BANK_OUTPUT_BUFFER_SIZE);
+	std::memcpy(this->dma_buffer, this->bank_buffer, BANK_OUTPUT_BUFFER_SIZE);
 	// memcpy the second bank
-	std::memcpy(this->dma_buffer + BANK_OUTPUT_BUFFER_SIZE, bank_output_buffer,
+	std::memcpy(this->dma_buffer + BANK_OUTPUT_BUFFER_SIZE, this->bank_buffer,
 			BANK_OUTPUT_BUFFER_SIZE);
 }

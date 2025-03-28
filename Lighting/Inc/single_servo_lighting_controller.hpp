@@ -7,8 +7,7 @@
 
 #include <cstdint>
 
-#include "conversions.hpp"
-#include "ws2812.hpp"
+#include "ws2812.h"
 
 class SingleServoLightingController {
 public:
@@ -28,13 +27,11 @@ public:
 
 	/**
 	 * Sets specified LED on.
-	 *
-	 * @param desired_colour : RGB_colour_t that you want set.
 	 * 
 	 * @param index : The LED on the lighting board that you want to set.
 	 * 
 	 */
-	void set_led_on(RGB_colour_t desired_colour, uint8_t index);
+	void set_led_on(uint8_t index);
 
 	/**
 	 * Recolours specified LED to the desired color.

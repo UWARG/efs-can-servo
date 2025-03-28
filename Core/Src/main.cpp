@@ -17,7 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "../Inc/main.h"
 #include "can.h"
 #include "dma.h"
 #include "tim.h"
@@ -30,10 +30,12 @@
 #include <canard.h>
 #include <_timespec.h>
 #include <time.h>
-#include "../dsdlc_generated/inc/dronecan_msgs.h"
+#include "dronecan_msgs.h"
 #include <canard_stm32_driver.h>
 #include "node_settings.h"
 #include "canardRxQueue.h"
+#include <single_servo_lighting_controller.hpp>
+#include <conversions.h>
 
 /* USER CODE END Includes */
 
@@ -63,6 +65,10 @@ const int PWM_TRIM = 1500; // The trim value for the PWM signal
 const float PWM_SCALE_FACTOR = 500.0; // Scale factor to map PWM to range -1 to 1
 static CanardInstance canard;
 static uint8_t memory_pool[1024];
+static uint8_t dma_output_buffer[DMA_OUTPUT_BUFFER_SIZE];
+static uint8_t bank_output_buffer[BANK_OUTPUT_BUFFER_SIZE];
+static WS2812 leds[NUM_LEDS];
+static SingleServoLightingController lighting_controller(dma_output_buffer,bank_output_buffer,leds);
 
 /* USER CODE END PV */
 
@@ -158,6 +164,9 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 	}
 	else if (rx_res > 0)        // Success - process the frame
 	{
+		// Blink LED_1 (index 0) when command received
+		lighting_controller.blink_led_once(0);
+
 		enqueueRxReturnCode enqueueRxReturnCode = enqueueRxFrame(&rx_frame);
 
 		switch (enqueueRxReturnCode) {
@@ -477,6 +486,7 @@ void onTransferReceived(CanardInstance *ins, CanardRxTransfer *transfer) {
 
 void processCanardTxQueue(CAN_HandleTypeDef *hcan) {
 	// Transmitting
+	lighting_controller.set_led_on(2);
 
 	for (const CanardCANFrame *tx_frame ; (tx_frame = canardPeekTxQueue(&canard)) != NULL;) {
 		const int16_t tx_res = canardSTM32Transmit(hcan, tx_frame);
@@ -490,6 +500,8 @@ void processCanardTxQueue(CAN_HandleTypeDef *hcan) {
 		// Pop canardTxQueue either way
 		canardPopTxQueue(&canard);
 	}
+
+	lighting_controller.set_led_off(2);
 }
 
 /*
@@ -540,6 +552,24 @@ static void send_ServoStatus(void)
                         buffer,
                         len);
     }
+}
+
+//////////////////////////////////////////
+// LIGHTING CALLBACKS
+//////////////////////////////////////////
+void HAL_TIM_PWM_PulseFinishedHalfCpltCallback(TIM_HandleTypeDef *htim) {
+	// | BANK 1 | BANK 2 |
+	//          ^ Current location
+	// So update BANK 1
+	memcpy(dma_output_buffer, bank_output_buffer, BANK_OUTPUT_BUFFER_SIZE);
+}
+
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
+	// | BANK 1 | BANK 2 |
+	//                   ^ Current location
+	// So update BANK 2
+	memcpy(dma_output_buffer + BANK_OUTPUT_BUFFER_SIZE, bank_output_buffer,
+			BANK_OUTPUT_BUFFER_SIZE);
 }
 
 
@@ -609,6 +639,28 @@ int main(void)
 
 	uint64_t next_1hz_service_at = HAL_GetTick();
 	uint64_t next_50hz_service_at = HAL_GetTick();
+
+	// Lighting controller setup
+	RGB_colour_t blue = {
+	        .red = 0,
+	        .green = 0,
+			.blue = 255
+	    };
+	RGB_colour_t green = {
+		        .red = 0,
+		        .green = 255,
+				.blue = 0
+		    };
+	RGB_colour_t orange = {
+		        .red = 255,
+		        .green = 165,
+				.blue = 0
+		    };
+	lighting_controller.start_lighting_control();
+	lighting_controller.recolour_led(blue,0);
+	lighting_controller.recolour_led(green,1);
+	lighting_controller.recolour_led(orange,2);
+	lighting_controller.set_led_on(1);
   /* USER CODE END 2 */
 
   /* Infinite loop */

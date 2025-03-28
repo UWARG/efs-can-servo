@@ -11,7 +11,7 @@
 #include <cstdint>
 #include <cstring>
 
-#include "ws2812.hpp"
+#include "ws2812.h"
 
 //
 //// WS2812 class definition.
